@@ -3,12 +3,12 @@
     "info": {
         "description": "This API enables the programmatic management of key components of an HPE SimpliVity configuration.\n\nTo access the API, request an authentication token by issuing an authentication request in the following form, where the username/password combination is a set of valid management credentials for the applicable hypervisor environment:\n\n     curl -k https://simplivity@<host>/api/oauth/token -d grant_type=password -d username=<user> -d password=<pass>\n\nThen, you can pass in the resulting access_token returned in each HTTP header using Authorization: Bearer token. For example:\n\n     curl -H \"Authorization: Bearer 0a08c809-17ff-479f-b0a8-aedd4d8305a0\"\n\nThe access_token times out after 10 minutes of inactivity and expires after 24 hours.\n\nMake sure to use TLS version 1.1 or greater.\n",
         "version": "1.9",
-        "title": "HPE SimpliVity REST API",
+        "title": "HPE OmniStack REST API",
         "contact": {
             "name": "Hewlett Packard Enterprise"
         },
         "license": {
-            "name": "HPE SimpliVity REST API"
+            "name": "HPE OmniStack REST API"
         }
     },
     "host": "localhost",
@@ -190,6 +190,13 @@
                         "type": "string"
                     },
                     {
+                        "name": "virtual_machine_state",
+                        "in": "query",
+                        "description": "The state of the virtual_machine that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "size_min",
                         "in": "query",
                         "description": "The minimum size (in bytes) of the backups to return",
@@ -262,6 +269,22 @@
                         "description": "The earliest time after the replication of backups to return was completed, expressed in ISO-8601 form, based on Coordinated Universal Time (UTC)",
                         "required": false,
                         "type": "string"
+                    },
+                    {
+                        "name": "unique_size_bytes_min",
+                        "in": "query",
+                        "description": "The minimum unique size (in bytes) of the backups to return",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
+                    },
+                    {
+                        "name": "unique_size_bytes_max",
+                        "in": "query",
+                        "description": "The maximum unique size (in bytes) of the backups to return",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int64"
                     },
                     {
                         "name": "fields",
@@ -970,6 +993,142 @@
                     },
                     "201": {
                         "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/backups/{bkpId}/restore_files": {
+            "post": {
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Restore files from a specific partition",
+                "operationId": "restoreFiles",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "bkpId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the backup that you want to retrieve",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "Restored file information",
+                        "description": "Virtual machine id and paths needed to restore the files",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/restore_file"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/task"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/backups/{bkpId}/virtual_disk_partition_files": {
+            "get": {
+                "tags": [
+                    "backups"
+                ],
+                "summary": "Retrieves the virtual hard disk files from the backup",
+                "operationId": "getBackupFiles",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "bkpId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the backup that you want to retrieve",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "virtual_disk",
+                        "in": "query",
+                        "description": "The name of the virtual hard disk for the virtual machine",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "partition_number",
+                        "in": "query",
+                        "description": "The partition number of the virtual disk associated with the backup",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "file_path",
+                        "in": "query",
+                        "description": "The path in the partition that has the file information you want. e.g. for root directory use \"/\"",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/BackupFileDataMO"
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1986,6 +2145,20 @@
                         "type": "boolean"
                     },
                     {
+                        "name": "omnistack_cluster_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the omnistack_cluster associated with the host",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "state",
+                        "in": "query",
+                        "description": "The current state of the host",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "fields",
                         "in": "query",
                         "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
@@ -2143,7 +2316,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/ShutdownCancellationMO"
+                            "$ref": "#/definitions/ShutdownResponseMO"
                         }
                     },
                     "201": {
@@ -2371,12 +2544,81 @@
                 }
             }
         },
+        "/hosts/{hostId}/remove_from_federation": {
+            "post": {
+                "tags": [
+                    "hosts"
+                ],
+                "summary": "Removes the specified host from the federation. The specified hostId must not be the host executing the request.",
+                "operationId": "removeHostFromFederation",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "hostId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the host",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "remove host from federation options",
+                        "description": "force: An indicator that specifies if the host should be removed forcefully or not.\n\nValid values:\n\nTrue: Forces the removal of the host even if active virtual machines are present and if the host is not HA-compliant. This may cause data loss.\n\nFalse: Returns an error if there are any virtual machines on the host or if the host is not HA-compliant.\n\nDefault: false",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/remove_from_federation"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/task"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "202": {
+                        "description": "Accepted",
+                        "schema": {
+                            "$ref": "#/definitions/task"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/hosts/{hostId}/shutdown_virtual_controller": {
             "post": {
                 "tags": [
                     "hosts"
                 ],
-                "summary": "Shuts down the Virtual Controller after reaching HA compliance to safely shut down the host",
+                "summary": "Shuts down the Virtual Controller safely (by reaching HA compliance) or by force",
                 "operationId": "shutdownVirtualControllerUsingPOST",
                 "consumes": [
                     "application/json"
@@ -2401,13 +2643,22 @@
                         "description": "The unique identifier (UID) of the host",
                         "required": true,
                         "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "host shutdown details",
+                        "description": "ha_wait: An indicator to show if the user wants to shut down the Virtual Controller safely or forcefully.\n\nValid values:\n\nTrue: Virtual Controller waits for the virtual machines to reach HA compliance before shutting down\n\nFalse: Virtual Controller forced to shut down without waiting for HA compliance\n\nDefault: True",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/ShutdownVirtualControllerMO"
+                        }
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object"
+                            "$ref": "#/definitions/ShutdownResponseMO"
                         }
                     },
                     "201": {
@@ -3431,6 +3682,154 @@
                 "deprecated": true
             }
         },
+        "/policies/{policyId}/impact_report/create_rules": {
+            "post": {
+                "tags": [
+                    "policies"
+                ],
+                "summary": "Generate a backup impact reported based on proposed creation of rules for the policy",
+                "operationId": "reportOnProposedRulesCreation",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "policyId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the policy you want to access",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "replace_all_rules",
+                        "in": "query",
+                        "description": "An indicator to replace the existing rules with new rules for a policy\n\nValid values:\n\nTrue: Replaces the existing rules with the new rules\n\nFalse: Adds new rules to the existing set of rules\n\nDefault: false",
+                        "required": true,
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "in": "body",
+                        "name": "Array of rules proposed to be created for the policy",
+                        "description": "app_consistent: An indicator that shows if data should be flushed to disk before taking a backup\n\nDefault: false\n\nconsistency_type: The consistency type for the rule\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/create_or_edit_rule"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/policy_schedule_impact_report"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/policies/{policyId}/impact_report/edit_rules": {
+            "post": {
+                "tags": [
+                    "policies"
+                ],
+                "summary": "Generate a backup impact reported based on proposed changes to the rules for the policy",
+                "operationId": "reportOnProposedRulesEdits",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "policyId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the policy you want to access",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "replace_all_rules",
+                        "in": "query",
+                        "description": "An indicator to replace the existing rules with new rules for a policy\n\nValid values:\n\nTrue: Replaces the existing rules with the new rules\n\nFalse: Adds new rules to the existing set of rules\n\nDefault: false",
+                        "required": true,
+                        "type": "boolean",
+                        "default": false
+                    },
+                    {
+                        "in": "body",
+                        "name": "Array of rules proposed to be changed in the policy",
+                        "description": "rule_id: The unique identifier (UID) of the policy rule\n\napp_consistent: An indicator that shows if data should be flushed to disk before taking a backup\n\nDefault: false\n\nconsistency_type: The consistency type for the rule\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
+                        "required": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/report_on_proposed_rules_edits"
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/policy_schedule_impact_report"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/policies/{policyId}/rename": {
             "post": {
                 "tags": [
@@ -3553,7 +3952,7 @@
                     {
                         "in": "body",
                         "name": "array of policy rules information",
-                        "description": "app_consistent: An indicator that shows if data should be flushed to disk before taking a backup\n\nDefault: false\n\nconsistency_type: The consistency type for the rule\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri) or month (for example, 1,15) to take backups\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
+                        "description": "app_consistent: An indicator that shows if data should be flushed to disk before taking a backup\n\nDefault: false\n\nconsistency_type: The consistency type for the rule\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
                         "required": true,
                         "schema": {
                             "type": "array",
@@ -3776,6 +4175,67 @@
                 }
             }
         },
+        "/policies/{policyId}/rules/{ruleId}/impact_report/delete_rule": {
+            "post": {
+                "tags": [
+                    "policies"
+                ],
+                "summary": "Generate a backup impact reported based on proposed deletion of a policy rule",
+                "operationId": "reportOnProposedRuleDeletion",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "policyId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the policy you want to access",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ruleId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the policy rule you want to access",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/policy_schedule_impact_report"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/policies/{policyId}/virtual_machines": {
             "get": {
                 "tags": [
@@ -3829,7 +4289,6 @@
                 "deprecated": true
             }
         },
-"/tasks": {},
         "/tasks/{taskId}": {
             "get": {
                 "tags": [
@@ -4117,6 +4576,62 @@
                 }
             }
         },
+        "/virtual_machines/policy_impact_report/apply_policy": {
+            "post": {
+                "tags": [
+                    "virtual_machines"
+                ],
+                "summary": "Generate a backup impact reported based on proposed application of a policy to one or more virtual machines",
+                "operationId": "reportOnProposedVMPolicySetting",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "backup policy and virtual machine information",
+                        "description": "policy_id: The unique identifier (UID) of the policy that you want to associate with the virtual_machine\n\nvirtual_machine_id: The unique identifier (UID) of each virtual_machine that you want to associate with the specified policy",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/vm_set_policy_vms"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/policy_schedule_impact_report"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/virtual_machines/set_policy": {
             "post": {
                 "tags": [
@@ -4153,7 +4668,7 @@
                     {
                         "in": "body",
                         "name": "backup policy and virtual machine information",
-                        "description": "policy_id: The unique identifier (UID) of the policy that you want to associate with the virtual_machine\n\nvirtual_machine_id: The unique identifier (UID) of each virtual_machine that you want to associate the specified policy",
+                        "description": "policy_id: The unique identifier (UID) of the policy that you want to associate with the virtual_machine\n\nvirtual_machine_id: The unique identifier (UID) of each virtual_machine that you want to associate with the specified policy",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/vm_set_policy_vms"
@@ -4808,6 +5323,47 @@
                 }
             }
         },
+        "BackupFileDataMO": {
+            "type": "object",
+            "required": [
+                "directory",
+                "file_level_restore_available",
+                "last_modified",
+                "name",
+                "size",
+                "symbolic_link"
+            ],
+            "properties": {
+                "directory": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Indicates if the file is a directory"
+                },
+                "file_level_restore_available": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Indicates if the file is supported for file level restore"
+                },
+                "last_modified": {
+                    "type": "string",
+                    "description": "The time when the file was last modified, expressed in ISO-8601 form, based on Coordinated Universal Time(UTC). Format: yyyy-mm-ddTHH:mm:ssZ"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the file"
+                },
+                "size": {
+                    "type": "integer",
+                    "format": "int64",
+                    "description": "The size of the file(in bytes)"
+                },
+                "symbolic_link": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Indicates if the file is a symbolic link"
+                }
+            }
+        },
         "BackupMO": {
             "type": "object",
             "required": [
@@ -4857,6 +5413,8 @@
                     "enum": [
                         "NONE",
                         "DEFAULT",
+                        "FAILEDVSS",
+                        "NOT_APPLICABLE",
                         "VSS"
                     ]
                 },
@@ -5037,6 +5595,8 @@
                     "enum": [
                         "NONE",
                         "DEFAULT",
+                        "FAILEDVSS",
+                        "NOT_APPLICABLE",
                         "VSS"
                     ]
                 },
@@ -5083,6 +5643,8 @@
                     "enum": [
                         "NONE",
                         "DEFAULT",
+                        "FAILEDVSS",
+                        "NOT_APPLICABLE",
                         "VSS"
                     ]
                 }
@@ -5203,7 +5765,7 @@
                 }
             }
         },
-        "ShutdownCancellationMO": {
+        "ShutdownResponseMO": {
             "type": "object",
             "required": [
                 "status"
@@ -5211,11 +5773,12 @@
             "properties": {
                 "status": {
                     "type": "string",
-                    "description": "The status of the process to cancel the Virtual Controller shutdown",
+                    "description": "The status of the process to shut down, cancel, or force the shutdown of the Virtual Controller",
                     "enum": [
                         "SUCCESS",
                         "FAILURE",
-                        "UNKNOWN"
+                        "UNKNOWN",
+                        "IN_PROGRESS"
                     ]
                 }
             }
@@ -5236,6 +5799,16 @@
                         "FORCE_IN_PROGRESS",
                         "HA"
                     ]
+                }
+            }
+        },
+        "ShutdownVirtualControllerMO": {
+            "type": "object",
+            "properties": {
+                "ha_wait": {
+                    "type": "boolean",
+                    "example": true,
+                    "description": "An indicator to show if the user wants to shut down the Virtual Controller safely or forcefully.\n\nValid values:\n\nTrue: Virtual Controller waits for the virtual machines to reach HA compliance before shutting down\n\nFalse: Virtual Controller forced to shut down without waiting for HA compliance\n\nDefault: True"
                 }
             }
         },
@@ -5329,6 +5902,8 @@
                     "enum": [
                         "NONE",
                         "DEFAULT",
+                        "FAILEDVSS",
+                        "NOT_APPLICABLE",
                         "VSS"
                     ]
                 }
@@ -5484,7 +6059,7 @@
                 },
                 "days": {
                     "type": "string",
-                    "description": "The days of the week (for example, Mon,Fri) or month (for example, 1,15) to take backups"
+                    "description": "The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month"
                 },
                 "start_time": {
                     "type": "string",
@@ -5505,6 +6080,8 @@
                     "enum": [
                         "NONE",
                         "DEFAULT",
+                        "FAILEDVSS",
+                        "NOT_APPLICABLE",
                         "VSS"
                     ]
                 }
@@ -5735,6 +6312,7 @@
                 "management_mtu",
                 "model",
                 "name",
+                "omnistack_cluster_id",
                 "policy_enabled",
                 "potential_feature_level",
                 "state",
@@ -5858,6 +6436,10 @@
                 "name": {
                     "type": "string",
                     "description": "The name of the host"
+                },
+                "omnistack_cluster_id": {
+                    "type": "string",
+                    "description": "The unique identifier (UID) of the omnistack_cluster associated with the host"
                 },
                 "policy_enabled": {
                     "type": "boolean",
@@ -6142,6 +6724,13 @@
                 "compression_ratio": {
                     "type": "string",
                     "description": "The ratio of data compressed across all hosts within the omnistack_cluster"
+                },
+                "connected_clusters": {
+                    "type": "array",
+                    "description": "The list of directly connected omnistack_clusters",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "deduplication_ratio": {
                     "type": "string",
@@ -6445,6 +7034,79 @@
             },
             "description": "A policy on this system"
         },
+        "policy_schedule_impact_report": {
+            "type": "object",
+            "required": [
+                "schedule_after_change",
+                "schedule_before_change"
+            ],
+            "properties": {
+                "schedule_after_change": {
+                    "description": "The policy backup schedule report",
+                    "$ref": "#/definitions/policy_schedule_report"
+                },
+                "schedule_before_change": {
+                    "description": "The policy backup schedule report",
+                    "$ref": "#/definitions/policy_schedule_report"
+                }
+            },
+            "description": "The policy backup schedule reports for prior to and after applying proposed changes"
+        },
+        "policy_schedule_report": {
+            "type": "object",
+            "required": [
+                "backup_rate_level",
+                "daily_backup_rate",
+                "daily_backup_rate_limit",
+                "projected_retained_backups",
+                "projected_retained_backups_level",
+                "retained_backups_limit"
+            ],
+            "properties": {
+                "backup_rate_level": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The ratio of daily_backup_rate vs daily_backup_rate_limit (i.e. What % of the maximum limit is currently specified)"
+                },
+                "daily_backup_rate": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The average number of backups created in a day in the federation as determined by the current set of backup policies and their rules, and the virtual machines assigned to those backup policies"
+                },
+                "daily_backup_rate_limit": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The maximum number of policy backups allowed to be created in the federation each day"
+                },
+                "projected_retained_backups": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The projection of the maximum number of backups that could be retained given the frequency and retention time specified by the backup policies and the virtual machines assigned to those backup policies"
+                },
+                "projected_retained_backups_level": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The ratio of projected_retained_backups vs retained_backups_limit (i.e. What % of the maximum limit is currently specified)"
+                },
+                "retained_backups_limit": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The maximum number of policy backups the federation is permitted to have at any given time"
+                }
+            },
+            "description": "A policy on this system"
+        },
+        "remove_from_federation": {
+            "type": "object",
+            "properties": {
+                "force": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "An indicator to force a retention time modification even if this action results in deleting backups"
+                }
+            },
+            "description": "Removes the specified host from the federation. The specified hostId must not be the host executing the request."
+        },
         "rename_backup": {
             "type": "object",
             "required": [
@@ -6457,6 +7119,63 @@
                 }
             },
             "description": "Renames the specified backup"
+        },
+        "report_on_proposed_rules_edits": {
+            "type": "object",
+            "required": [
+                "frequency",
+                "retention",
+                "rule_id"
+            ],
+            "properties": {
+                "destination_id": {
+                    "type": "string",
+                    "description": "The unique identifier (UID) of the omnistack_cluster to store the backup"
+                },
+                "rule_id": {
+                    "type": "string",
+                    "description": "The unique identifier (UID) of the policy rule"
+                },
+                "frequency": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The number of minutes between backups"
+                },
+                "retention": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The number of minutes to keep backups"
+                },
+                "days": {
+                    "type": "string",
+                    "description": "The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month"
+                },
+                "start_time": {
+                    "type": "string",
+                    "description": "The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS)."
+                },
+                "end_time": {
+                    "type": "string",
+                    "description": "The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS)."
+                },
+                "application_consistent": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "An indicator that shows if data should be flushed to disk before taking a backup"
+                },
+                "consistency_type": {
+                    "type": "string",
+                    "description": "The consistency type for the rule",
+                    "enum": [
+                        "NONE",
+                        "DEFAULT",
+                        "FAILEDVSS",
+                        "NOT_APPLICABLE",
+                        "VSS"
+                    ]
+                }
+            },
+            "description": "Generate a backup impact reported based on proposed changes to the rules for the policy"
         },
         "resize_datastore": {
             "type": "object",
@@ -6471,6 +7190,27 @@
                 }
             },
             "description": "Resizes a datastore"
+        },
+        "restore_file": {
+            "type": "object",
+            "required": [
+                "paths",
+                "virtual_machine_id"
+            ],
+            "properties": {
+                "virtual_machine_id": {
+                    "type": "string",
+                    "description": "The identification number of the virtual machine where you want to restore the files"
+                },
+                "paths": {
+                    "type": "array",
+                    "description": "The paths to the files in this format: virtual_machine_disk_name/partition_number/path_to_file (for example, \"vmdk1.vmdk/2/Documents/file.txt\")",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "Restore files from a specific partition"
         },
         "restore_virtual_machine": {
             "type": "object",
@@ -6525,7 +7265,7 @@
                 },
                 "days": {
                     "type": "string",
-                    "description": "The days of the week (for example, Mon,Fri) or month (for example, 1,15) to take backups"
+                    "description": "The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month"
                 },
                 "max_backups": {
                     "type": "integer",
@@ -6551,6 +7291,8 @@
                     "enum": [
                         "NONE",
                         "DEFAULT",
+                        "FAILEDVSS",
+                        "NOT_APPLICABLE",
                         "VSS"
                     ]
                 }
@@ -7019,7 +7761,7 @@
             "properties": {
                 "virtual_machine_id": {
                     "type": "array",
-                    "description": "The unique identifier (UID) of each virtual_machine that you want to associate the specified policy",
+                    "description": "The unique identifier (UID) of each virtual_machine that you want to associate with the specified policy",
                     "items": {
                         "type": "string"
                     }
