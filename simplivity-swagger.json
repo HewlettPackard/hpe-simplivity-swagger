@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This API enables the programmatic management of key components of an HPE SimpliVity configuration.\n\nTo access the API, request an authentication token by issuing an authentication request in the following form, where the username/password combination is a set of valid management credentials for the applicable hypervisor environment:\n\n     curl -k https://simplivity@<host>/api/oauth/token -d grant_type=password -d username=<user> -d password=<pass>\n\nThen, you can pass in the resulting access_token returned in each HTTP header using Authorization: Bearer token. For example:\n\n     curl -H \"Authorization: Bearer 0a08c809-17ff-479f-b0a8-aedd4d8305a0\"\n\nThe access_token times out after 10 minutes of inactivity and expires after 24 hours.\n\nMake sure to use TLS version 1.1 or greater.\n",
-        "version": "1.9",
+        "version": "1.10",
         "title": "HPE OmniStack REST API",
         "contact": {
             "name": "Hewlett Packard Enterprise"
@@ -12,7 +12,7 @@
         }
     },
     "host": "localhost",
-    "basePath": "",
+    "basePath": "/",
     "tags": [
         {
             "name": "datastores",
@@ -21,6 +21,10 @@
         {
             "name": "hosts",
             "description": "A host is a virtual object that uses HPE OmniStack software in a federation."
+        },
+        {
+            "name": "certificates",
+            "description": "An SSL certificate represents a single instance of an SSL certificate that has been added to an HPE SimpliVity trust store"
         },
         {
             "name": "policies",
@@ -63,6 +67,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -129,14 +134,14 @@
                     {
                         "name": "compute_cluster_parent_hypervisor_object_id",
                         "in": "query",
-                        "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
+                        "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "compute_cluster_parent_name",
                         "in": "query",
-                        "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
+                        "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
@@ -372,6 +377,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -385,6 +391,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -437,6 +444,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -450,6 +458,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -512,6 +521,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -561,6 +571,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -608,6 +619,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -621,6 +633,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -671,6 +684,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -684,6 +698,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -734,6 +749,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -747,6 +763,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -806,6 +823,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -819,6 +837,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -869,6 +888,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -882,6 +902,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -941,6 +962,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -954,6 +976,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1014,7 +1037,8 @@
                 "summary": "Restore files from a specific partition",
                 "operationId": "restoreFiles",
                 "consumes": [
-                    "application/vnd.simplivity.v1.9+json"
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
@@ -1025,6 +1049,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1088,6 +1113,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1161,6 +1187,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1219,6 +1246,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1251,6 +1279,206 @@
                 }
             }
         },
+        "/certificates": {
+            "get": {
+                "tags": [
+                    "certificates"
+                ],
+                "summary": "Get all SSL certificates from the HPE SimpliVity trust store",
+                "operationId": "getCertificates",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "segment_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "certificates"
+                ],
+                "summary": "Add an SSL certificate to the HPE SimpliVity trust store",
+                "operationId": "addCertificate",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json"
+                ],
+                "produces": [
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "segment_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "in": "body",
+                        "name": "mo",
+                        "description": "mo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/add_certificate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/certificates/{certId}": {
+            "get": {
+                "tags": [
+                    "certificates"
+                ],
+                "summary": "Get an SSL certificate from the HPE SimpliVity trust store",
+                "operationId": "getCertificate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "certId",
+                        "in": "path",
+                        "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to retrieve",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "segment_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "certificates"
+                ],
+                "summary": "Delete an SSL certificate in the HPE SimpliVity trust store",
+                "operationId": "deleteCertificate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "certId",
+                        "in": "path",
+                        "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to delete",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "segment_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
         "/datastores": {
             "get": {
                 "tags": [
@@ -1270,6 +1498,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1344,14 +1573,14 @@
                     {
                         "name": "compute_cluster_parent_hypervisor_object_id",
                         "in": "query",
-                        "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
+                        "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "compute_cluster_parent_name",
                         "in": "query",
-                        "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
+                        "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
@@ -1474,6 +1703,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1487,6 +1717,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1543,6 +1774,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1592,6 +1824,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1639,6 +1872,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1652,6 +1886,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1711,6 +1946,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1724,6 +1960,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1777,6 +2014,7 @@
                 "operationId": "shareDatastore",
                 "consumes": [
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
@@ -1788,6 +2026,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1851,6 +2090,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1892,6 +2132,7 @@
                 "operationId": "unShareDatastore",
                 "consumes": [
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
@@ -1903,6 +2144,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -1966,6 +2208,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2031,7 +2274,7 @@
                     {
                         "name": "hypervisor_object_id",
                         "in": "query",
-                        "description": "The unique identifier (UID) of the hypervisor associated with the host\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The unique identifier (UID) of the hypervisor-based instance associated with the host\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
@@ -2080,14 +2323,14 @@
                     {
                         "name": "compute_cluster_parent_name",
                         "in": "query",
-                        "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instance\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "compute_cluster_parent_hypervisor_object_id",
                         "in": "query",
-                        "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instance\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
@@ -2248,6 +2491,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2299,6 +2543,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2353,6 +2598,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2436,6 +2682,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2487,6 +2734,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2552,7 +2800,8 @@
                 "summary": "Removes the specified host from the federation. The specified hostId must not be the host executing the request.",
                 "operationId": "removeHostFromFederation",
                 "consumes": [
-                    "application/vnd.simplivity.v1.9+json"
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
@@ -2563,6 +2812,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2632,6 +2882,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2695,6 +2946,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2746,6 +2998,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2776,28 +3029,28 @@
                     {
                         "name": "hypervisor_object_id",
                         "in": "query",
-                        "description": "The unique identifier (UID) of the hypervisor associated with the objects to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The unique identifier (UID) of the hypervisor-based instance associated with the objects to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "hypervisor_object_parent_id",
                         "in": "query",
-                        "description": "The unique identifier (UID) of the hypervisor that contains the objects to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The unique identifier (UID) of the hypervisor-based instance that contains the objects to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "hypervisor_object_parent_name",
                         "in": "query",
-                        "description": "The name of the hypervisor that contains the objects to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The name of the hypervisor-based instance that contains the objects to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "hypervisor_management_system_name",
                         "in": "query",
-                        "description": "The name of the hypervisor associated with the omnistack_cluster\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The name of the hypervisor-based instance associated with the omnistack_cluster\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
@@ -2912,6 +3165,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2954,6 +3208,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -2996,6 +3251,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3047,6 +3303,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3098,6 +3355,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3170,6 +3428,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3183,6 +3442,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3246,6 +3506,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3349,6 +3610,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3362,6 +3624,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3399,6 +3662,49 @@
                 }
             }
         },
+        "/policies/policy_schedule_report": {
+            "get": {
+                "tags": [
+                    "policies"
+                ],
+                "summary": "Retrieves the policy schedule report",
+                "operationId": "getPolicyScheduleReport",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/policy_schedule_report"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/policies/resume": {
             "post": {
                 "tags": [
@@ -3414,6 +3720,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3427,6 +3734,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3479,6 +3787,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3492,6 +3801,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3548,6 +3858,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3597,6 +3908,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3649,6 +3961,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3690,7 +4003,8 @@
                 "summary": "Generate a backup impact reported based on proposed creation of rules for the policy",
                 "operationId": "reportOnProposedRulesCreation",
                 "consumes": [
-                    "application/vnd.simplivity.v1.9+json"
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
@@ -3701,6 +4015,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3764,7 +4079,8 @@
                 "summary": "Generate a backup impact reported based on proposed changes to the rules for the policy",
                 "operationId": "reportOnProposedRulesEdits",
                 "consumes": [
-                    "application/vnd.simplivity.v1.9+json"
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
@@ -3775,6 +4091,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3845,6 +4162,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3858,6 +4176,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3916,6 +4235,7 @@
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -3929,6 +4249,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4003,6 +4324,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4055,6 +4377,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4068,6 +4391,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4136,6 +4460,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4183,7 +4508,8 @@
                 "summary": "Generate a backup impact reported based on proposed deletion of a policy rule",
                 "operationId": "reportOnProposedRuleDeletion",
                 "consumes": [
-                    "application/vnd.simplivity.v1.9+json"
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
@@ -4194,6 +4520,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4256,6 +4583,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4308,6 +4636,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4359,6 +4688,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4403,28 +4733,28 @@
                     {
                         "name": "compute_cluster_parent_hypervisor_object_id",
                         "in": "query",
-                        "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
+                        "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "compute_cluster_parent_name",
                         "in": "query",
-                        "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
+                        "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instances to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "hypervisor_management_system",
                         "in": "query",
-                        "description": "The IP address of the hypervisor associated with the virtual machine\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The IP address of the hypervisor-based instance associated with the virtual machine\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
                     {
                         "name": "hypervisor_management_system_name",
                         "in": "query",
-                        "description": "The name of the hypervisor associated with the virtual machine\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "description": "The name of the hypervisor-based instance associated with the virtual machine\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
                         "required": false,
                         "type": "string"
                     },
@@ -4584,7 +4914,8 @@
                 "summary": "Generate a backup impact reported based on proposed application of a policy to one or more virtual machines",
                 "operationId": "reportOnProposedVMPolicySetting",
                 "consumes": [
-                    "application/vnd.simplivity.v1.9+json"
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
@@ -4595,6 +4926,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4647,6 +4979,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4660,6 +4993,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4716,6 +5050,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4763,6 +5098,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4776,6 +5112,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4829,6 +5166,7 @@
                 "operationId": "setBackupParams",
                 "consumes": [
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
@@ -4840,6 +5178,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4904,6 +5243,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4952,6 +5292,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -4965,6 +5306,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -5028,6 +5370,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -5100,6 +5443,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -5113,6 +5457,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -5157,6 +5502,118 @@
                 }
             }
         },
+        "/virtual_machines/{vmId}/power_off": {
+            "post": {
+                "tags": [
+                    "virtual_machines"
+                ],
+                "summary": "Power off a VM",
+                "operationId": "powerOffVMUsingPOST",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "vmId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the virtual_machine you want to access",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/task"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/virtual_machines/{vmId}/power_on": {
+            "post": {
+                "tags": [
+                    "virtual_machines"
+                ],
+                "summary": "Power on a VM",
+                "operationId": "powerOnVMUsingPOST",
+                "consumes": [
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.1+json",
+                    "application/vnd.simplivity.v1+json",
+                    "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.6+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.2+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "vmId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the virtual_machine you want to access",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/task"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/virtual_machines/{vmId}/set_policy": {
             "post": {
                 "tags": [
@@ -5172,6 +5629,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -5185,6 +5643,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -5238,6 +5697,7 @@
                 "operationId": "validateBackupCred",
                 "consumes": [
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
@@ -5249,6 +5709,7 @@
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
+                    "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
                     "application/vnd.simplivity.v1.2+json"
@@ -5401,11 +5862,11 @@
                 },
                 "compute_cluster_parent_hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "compute_cluster_parent_name": {
                     "type": "string",
-                    "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "consistency_type": {
                     "type": "string",
@@ -5846,6 +6307,19 @@
             },
             "description": "The accelerator card information for the host"
         },
+        "add_certificate": {
+            "type": "object",
+            "required": [
+                "certificate"
+            ],
+            "properties": {
+                "certificate": {
+                    "type": "string",
+                    "description": "A Base64 encoded SSL certificate"
+                }
+            },
+            "description": "Add an SSL certificate to the HPE SimpliVity trust store"
+        },
         "analytics_info": {
             "type": "object",
             "required": [
@@ -6007,6 +6481,35 @@
             },
             "description": "The metrics information"
         },
+        "certificate": {
+            "type": "object",
+            "required": [
+                "certificate"
+            ],
+            "properties": {
+                "certificate": {
+                    "type": "string",
+                    "description": "A Base64 encoded SSL certificate"
+                },
+                "hash": {
+                    "type": "string",
+                    "description": "A hash value of the SSL certificate"
+                },
+                "subject": {
+                    "type": "string",
+                    "description": "The subject value of the SSL certificate"
+                },
+                "issuer": {
+                    "type": "string",
+                    "description": "The issuer value of the SSL certificate"
+                },
+                "serialno": {
+                    "type": "string",
+                    "description": "The serial number of the SSL certificate"
+                }
+            },
+            "description": "An SSL Certificate"
+        },
         "create_datastore": {
             "type": "object",
             "required": [
@@ -6143,11 +6646,11 @@
             "properties": {
                 "compute_cluster_parent_hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "compute_cluster_parent_name": {
                     "type": "string",
-                    "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "created_at": {
                     "type": "string",
@@ -6173,7 +6676,7 @@
                 },
                 "hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor associated with the datastore"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance associated with the datastore"
                 },
                 "hypervisor_type": {
                     "type": "string",
@@ -6354,11 +6857,11 @@
                 },
                 "compute_cluster_parent_hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "compute_cluster_parent_name": {
                     "type": "string",
-                    "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "current_feature_level": {
                     "type": "integer",
@@ -6405,7 +6908,7 @@
                 },
                 "hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor associated with the host"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance associated with the host"
                 },
                 "id": {
                     "type": "string",
@@ -6747,23 +7250,23 @@
                 },
                 "hypervisor_management_system": {
                     "type": "string",
-                    "description": "The IP address of the hypervisor associated with the omnistack_cluster"
+                    "description": "The IP address of the hypervisor-based instance associated with the omnistack_cluster"
                 },
                 "hypervisor_management_system_name": {
                     "type": "string",
-                    "description": "The name of the hypervisor associated with the omnistack_cluster"
+                    "description": "The name of the hypervisor-based instance associated with the omnistack_cluster"
                 },
                 "hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor associated with the omnistack_cluster"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance associated with the omnistack_cluster"
                 },
                 "hypervisor_object_parent_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster"
                 },
                 "hypervisor_object_parent_name": {
                     "type": "string",
-                    "description": "The name of the hypervisor that contains the omnistack_cluster"
+                    "description": "The name of the hypervisor-based instance that contains the omnistack_cluster"
                 },
                 "hypervisor_type": {
                     "type": "string",
@@ -6878,11 +7381,11 @@
                 },
                 "destination_omnistack_cluster_hypervisor_object_parent_id": {
                     "type": "string",
-                    "description": "The hypervisor ID of the parent of the destination omnistack_cluster"
+                    "description": "The hypervisor-based instance ID of the parent of the destination omnistack_cluster"
                 },
                 "destination_omnistack_cluster_hypervisor_object_parent_name": {
                     "type": "string",
-                    "description": "The hypervisor name of the parent of the destination omnistack_cluster"
+                    "description": "The hypervisor-based instance name of the parent of the destination omnistack_cluster"
                 },
                 "destination_omnistack_cluster_id": {
                     "type": "string",
@@ -6894,11 +7397,11 @@
                 },
                 "source_omnistack_cluster_hypervisor_object_parent_id": {
                     "type": "string",
-                    "description": "The hypervisor ID of the parent of the source omnistack_cluster"
+                    "description": "The hypervisor-based instance ID of the parent of the source omnistack_cluster"
                 },
                 "source_omnistack_cluster_hypervisor_object_parent_name": {
                     "type": "string",
-                    "description": "The hypervisor name of the parent of the source omnistack_cluster"
+                    "description": "The hypervisor-based instance name of the parent of the source omnistack_cluster"
                 },
                 "source_omnistack_cluster_id": {
                     "type": "string",
@@ -7066,7 +7569,7 @@
                 "backup_rate_level": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "The ratio of daily_backup_rate vs daily_backup_rate_limit (i.e. What % of the maximum limit is currently specified)"
+                    "description": "The ratio in percent of daily_backup_rate vs daily_backup_rate_limit (i.e. What % of the maximum limit is currently specified)"
                 },
                 "daily_backup_rate": {
                     "type": "integer",
@@ -7086,7 +7589,7 @@
                 "projected_retained_backups_level": {
                     "type": "integer",
                     "format": "int32",
-                    "description": "The ratio of projected_retained_backups vs retained_backups_limit (i.e. What % of the maximum limit is currently specified)"
+                    "description": "The ratio in percent of projected_retained_backups vs retained_backups_limit (i.e. What % of the maximum limit is currently specified)"
                 },
                 "retained_backups_limit": {
                     "type": "integer",
@@ -7575,11 +8078,11 @@
                 },
                 "compute_cluster_parent_hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "compute_cluster_parent_name": {
                     "type": "string",
-                    "description": "The name of the hypervisor that contains the omnistack_cluster that is associated with the instance"
+                    "description": "The name of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
                 },
                 "created_at": {
                     "type": "string",
@@ -7657,22 +8160,30 @@
                     "format": "int64",
                     "description": "The number of bytes of free space available to this virtual machine across all datastores"
                 },
+                "hypervisor_instance_id": {
+                    "type": "string",
+                    "description": "The unique identifier (UID) of the hypervisor-based instance associated with a virtual_machine"
+                },
                 "hypervisor_is_template": {
                     "type": "boolean",
                     "example": false,
                     "description": "An indicator that shows if the virtual machine is a template"
                 },
+                "hypervisor_managed_by": {
+                    "type": "string",
+                    "description": "The managed by property of the virtual machine"
+                },
                 "hypervisor_management_system": {
                     "type": "string",
-                    "description": "The IP address of the hypervisor associated with the virtual machine"
+                    "description": "The IP address of the hypervisor-based instance associated with the virtual machine"
                 },
                 "hypervisor_management_system_name": {
                     "type": "string",
-                    "description": "The name of the hypervisor associated with the virtual machine"
+                    "description": "The name of the hypervisor-based instance associated with the virtual machine"
                 },
                 "hypervisor_object_id": {
                     "type": "string",
-                    "description": "The unique identifier (UID) of the hypervisor associated with a virtual_machine"
+                    "description": "The unique identifier (UID) of the hypervisor-based instance associated with a virtual_machine"
                 },
                 "hypervisor_total_memory": {
                     "type": "integer",
@@ -7686,6 +8197,10 @@
                         "VSPHERE",
                         "HYPERV"
                     ]
+                },
+                "hypervisor_uuid": {
+                    "type": "string",
+                    "description": "The SMBIOS unique identifier (UID) of the hypervisor-based instance associated with a virtual_machine"
                 },
                 "hypervisor_virtual_disk_count": {
                     "type": "integer",
