@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This API enables the programmatic management of key components of an HPE SimpliVity configuration.\n\nTo access the API, request an authentication token by issuing an authentication request in the following form, where the username/password combination is a set of valid management credentials for the applicable hypervisor environment:\n\n     curl -k https://simplivity@<host>/api/oauth/token -d grant_type=password -d username=<user> -d password=<pass>\n\nThen, you can pass in the resulting access_token returned in each HTTP header using Authorization: Bearer token. For example:\n\n     curl -H \"Authorization: Bearer 0a08c809-17ff-479f-b0a8-aedd4d8305a0\"\n\nThe access_token times out after 10 minutes of inactivity and expires after 24 hours.\n\nMake sure to use TLS version 1.1 or greater.\n",
-        "version": "1.10",
+        "version": "1.11",
         "title": "HPE OmniStack REST API",
         "contact": {
             "name": "Hewlett Packard Enterprise"
@@ -59,18 +59,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -372,6 +373,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -383,18 +385,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -439,6 +442,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -450,18 +454,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -513,18 +518,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -563,18 +569,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -614,6 +621,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -625,18 +633,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -679,6 +688,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -690,18 +700,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -744,6 +755,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -755,18 +767,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -818,6 +831,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -829,18 +843,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -883,6 +898,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -894,18 +910,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -957,6 +974,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -968,18 +986,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1037,22 +1056,24 @@
                 "summary": "Restore files from a specific partition",
                 "operationId": "restoreFiles",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1105,18 +1126,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1179,18 +1201,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1238,18 +1261,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1290,19 +1314,11 @@
                     "application/json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
-                ],
-                "parameters": [
-                    {
-                        "name": "segment_id",
-                        "in": "query",
-                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
-                        "required": false,
-                        "type": "string"
-                    }
                 ],
                 "responses": {
                     "200": {
@@ -1329,24 +1345,19 @@
                 "summary": "Add an SSL certificate to the HPE SimpliVity trust store",
                 "operationId": "addCertificate",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
-                    {
-                        "name": "segment_id",
-                        "in": "query",
-                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
-                        "required": false,
-                        "type": "string"
-                    },
                     {
                         "in": "body",
                         "name": "mo",
@@ -1358,14 +1369,56 @@
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "OK",
+                    "201": {
+                        "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/certificate"
                         }
                     },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/certificates/upload_der_encoded_certificate": {
+            "post": {
+                "tags": [
+                    "certificates"
+                ],
+                "summary": "Add a DER encoded SSL certificate to the HPE SimpliVity trust store",
+                "operationId": "addDEREncodedCertificate",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "certificate",
+                        "in": "formData",
+                        "description": "A DER encoded SSL certificate",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
                     "201": {
-                        "description": "Created"
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1390,6 +1443,7 @@
                     "application/json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -1401,13 +1455,6 @@
                         "in": "path",
                         "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to retrieve",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "segment_id",
-                        "in": "query",
-                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -1439,6 +1486,7 @@
                     "application/json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -1450,13 +1498,6 @@
                         "in": "path",
                         "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to delete",
                         "required": true,
-                        "type": "string"
-                    },
-                    {
-                        "name": "segment_id",
-                        "in": "query",
-                        "description": "The unique identifier (UID) of the HPE Omnistack segment",
-                        "required": false,
                         "type": "string"
                     }
                 ],
@@ -1490,18 +1531,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1698,6 +1740,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1709,18 +1752,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1766,18 +1810,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1816,18 +1861,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1867,6 +1913,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1878,18 +1925,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -1941,6 +1989,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1952,18 +2001,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2013,23 +2063,25 @@
                 "summary": "Share a datastore",
                 "operationId": "shareDatastore",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2082,18 +2134,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2131,23 +2184,25 @@
                 "summary": "Stop sharing a datastore",
                 "operationId": "unShareDatastore",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2200,18 +2255,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2483,18 +2539,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2535,18 +2592,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2590,18 +2648,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2674,18 +2733,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2726,18 +2786,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2800,22 +2861,24 @@
                 "summary": "Removes the specified host from the federation. The specified hostId must not be the host executing the request.",
                 "operationId": "removeHostFromFederation",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2874,18 +2937,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2938,18 +3002,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -2990,18 +3055,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3157,18 +3223,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "responses": {
                     "200": {
@@ -3200,18 +3267,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "responses": {
                     "200": {
@@ -3243,18 +3311,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3295,18 +3364,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3347,18 +3417,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3423,6 +3494,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3434,18 +3506,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3498,18 +3571,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3605,6 +3679,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3616,18 +3691,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3673,18 +3749,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "responses": {
                     "200": {
@@ -3715,6 +3792,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3726,18 +3804,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3782,6 +3861,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3793,18 +3873,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3850,18 +3931,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3900,18 +3982,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -3953,18 +4036,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4003,22 +4087,24 @@
                 "summary": "Generate a backup impact reported based on proposed creation of rules for the policy",
                 "operationId": "reportOnProposedRulesCreation",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4079,22 +4165,24 @@
                 "summary": "Generate a backup impact reported based on proposed changes to the rules for the policy",
                 "operationId": "reportOnProposedRulesEdits",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4157,6 +4245,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4168,18 +4257,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4231,6 +4321,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4241,18 +4332,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4316,18 +4408,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4372,6 +4465,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4383,18 +4477,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4452,18 +4547,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4508,22 +4604,24 @@
                 "summary": "Generate a backup impact reported based on proposed deletion of a policy rule",
                 "operationId": "reportOnProposedRuleDeletion",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4575,18 +4673,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4628,18 +4727,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4680,18 +4780,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4914,22 +5015,24 @@
                 "summary": "Generate a backup impact reported based on proposed application of a policy to one or more virtual machines",
                 "operationId": "reportOnProposedVMPolicySetting",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -4974,6 +5077,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4985,18 +5089,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5042,18 +5147,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5093,6 +5199,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5104,18 +5211,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5165,23 +5273,25 @@
                 "summary": "Set the virtual machine backup parameters used for application consistent backups.",
                 "operationId": "setBackupParams",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5235,18 +5345,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5287,6 +5398,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5298,18 +5410,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5362,18 +5475,19 @@
                     "application/json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5438,6 +5552,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5449,18 +5564,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5510,22 +5626,24 @@
                 "summary": "Power off a VM",
                 "operationId": "powerOffVMUsingPOST",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5566,22 +5684,24 @@
                 "summary": "Power on a VM",
                 "operationId": "powerOnVMUsingPOST",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5624,6 +5744,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5635,18 +5756,19 @@
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -5696,23 +5818,25 @@
                 "summary": "Validates the credentials for the virtual machine you want to backup",
                 "operationId": "validateBackupCred",
                 "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json"
                 ],
                 "produces": [
-                    "application/vnd.simplivity.v1.7+json",
-                    "application/vnd.simplivity.v1.4+json",
                     "application/json",
                     "application/vnd.simplivity.v1.5+json",
                     "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
+                    "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.4+json",
+                    "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.8+json"
                 ],
                 "parameters": [
                     {
@@ -7097,6 +7221,35 @@
             },
             "description": "A list of hardware modules for the host"
         },
+        "infosight_configuration": {
+            "type": "object",
+            "properties": {
+                "enable": {
+                    "type": "boolean"
+                },
+                "infosight_enabled": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "The flag that indicates the Omnistack host should transmit data to HPE InfoSight"
+                },
+                "infosight_proxy_url": {
+                    "type": "string",
+                    "description": "The proxy location for HPE InfoSight to use"
+                },
+                "infosight_registered": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "The flag that indicates the cluster is registered with the HPE InfoSight service"
+                },
+                "proxy": {
+                    "type": "string"
+                },
+                "registered": {
+                    "type": "boolean"
+                }
+            },
+            "description": "The current configuration of the HPE InfoSight service"
+        },
         "logical_drive": {
             "type": "object",
             "required": [
@@ -7279,6 +7432,10 @@
                 "id": {
                     "type": "string",
                     "description": "The unique identifier (UID) of the omnistack_cluster"
+                },
+                "infosight_configuration": {
+                    "description": "The current configuration of the HPE InfoSight service",
+                    "$ref": "#/definitions/infosight_configuration"
                 },
                 "local_backup_capacity": {
                     "type": "integer",
