@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This API enables the programmatic management of key components of an HPE SimpliVity configuration.\n\nTo access the API, request an authentication token by issuing an authentication request in the following form, where the username/password combination is a set of valid management credentials for the applicable hypervisor environment:\n\n     curl -k https://simplivity@<host>/api/oauth/token -d grant_type=password -d username=<user> -d password=<pass>\n\nThen, you can pass in the resulting access_token returned in each HTTP header using Authorization: Bearer token. For example:\n\n     curl -H \"Authorization: Bearer 0a08c809-17ff-479f-b0a8-aedd4d8305a0\"\n\nThe access_token times out after 10 minutes of inactivity and expires after 24 hours.\n\nMake sure to use TLS version 1.1 or greater.\n",
-        "version": "1.11",
+        "version": "1.12",
         "title": "HPE OmniStack REST API",
         "contact": {
             "name": "Hewlett Packard Enterprise"
@@ -23,8 +23,12 @@
             "description": "A host is a virtual object that uses HPE OmniStack software in a federation."
         },
         {
-            "name": "certificates",
-            "description": "An SSL certificate represents a single instance of an SSL certificate that has been added to an HPE SimpliVity trust store"
+            "name": "cluster_groups",
+            "description": "A set of omnistack_clusters that are able to perform backup and restore operations between each other"
+        },
+        {
+            "name": "security",
+            "description": "Includes the REST APIs that support security operations for HPE SimpliVity objects"
         },
         {
             "name": "policies",
@@ -71,7 +75,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -293,6 +298,13 @@
                         "format": "int64"
                     },
                     {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifiers (UIDs) of the cluster_groups associated with the backups to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "fields",
                         "in": "query",
                         "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
@@ -371,18 +383,19 @@
                 "summary": "Deletes the specified list of backup instances",
                 "operationId": "deleteBackups",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -397,7 +410,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -414,7 +428,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -440,18 +454,19 @@
                 "summary": "Sets the retention time for the specified list of backups",
                 "operationId": "setBackupRetention",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -466,7 +481,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -492,7 +508,7 @@
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "401": {
@@ -530,7 +546,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -581,7 +598,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -596,7 +614,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "204": {
@@ -619,18 +637,19 @@
                 "summary": "Calculates the unique size of the specified backup",
                 "operationId": "calculateUniqueSize",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -645,7 +664,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -660,7 +680,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -686,18 +706,19 @@
                 "summary": "Cancels the specified running backup",
                 "operationId": "cancelBackup",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -712,7 +733,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -727,7 +749,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -753,18 +775,19 @@
                 "summary": "Copies the specified backup to another omnistack_cluster",
                 "operationId": "copyBackup",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -779,7 +802,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -803,7 +827,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -829,18 +853,19 @@
                 "summary": "Saves the specified backup to prevent it from expiring",
                 "operationId": "lockBackup",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -855,7 +880,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -870,7 +896,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -896,18 +922,19 @@
                 "summary": "Renames the specified backup",
                 "operationId": "renameBackup",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -922,7 +949,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -946,7 +974,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -972,18 +1000,19 @@
                 "summary": "Creates a new virtual machine or replaces the original virtual machine from the specified backup",
                 "operationId": "restoreFromBackup",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -998,7 +1027,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1030,7 +1060,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -1058,7 +1088,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -1073,7 +1104,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1097,7 +1129,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -1138,7 +1170,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1213,7 +1246,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1273,7 +1307,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1303,28 +1338,97 @@
                 }
             }
         },
-        "/certificates": {
+        "/cluster_groups": {
             "get": {
                 "tags": [
-                    "certificates"
+                    "cluster_groups"
                 ],
-                "summary": "Get all SSL certificates from the HPE SimpliVity trust store",
-                "operationId": "getCertificates",
+                "summary": "Retrieves all cluster_groups",
+                "operationId": "listClusterGroups",
                 "consumes": [
                     "application/json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the cluster_groups to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "The name of the cluster_groups to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "A positive integer that represents the maximum number of results to return\n\nDefault: 500",
+                        "required": false,
+                        "type": "integer",
+                        "default": 500,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "A positive integer that directs the service to start returning the &lt;offset value&gt; instance, up to the limit\n\nDefault: 0",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "case",
+                        "in": "query",
+                        "description": "An indicator that specifies if the filter and sort results use a case-sensitive or insensitive manner\n\nValid values: sensitive or insensitive\n\nDefault: sensitive",
+                        "required": false,
+                        "type": "string",
+                        "default": "sensitive",
+                        "enum": [
+                            "sensitive",
+                            "insensitive"
+                        ]
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "The name of the field where the sort occurs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "The sort order preference\n\nValid values: ascending or descending\n\nDefault: descending",
+                        "required": false,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/certificate"
+                            "$ref": "#/definitions/clusterGroup"
                         }
                     },
                     "401": {
@@ -1337,133 +1441,59 @@
                         "description": "Not Found"
                     }
                 }
-            },
+            }
+        },
+        "/cluster_groups/{clusterGroupId}/rename": {
             "post": {
                 "tags": [
-                    "certificates"
+                    "cluster_groups"
                 ],
-                "summary": "Add an SSL certificate to the HPE SimpliVity trust store",
-                "operationId": "addCertificate",
+                "summary": "Renames the specified cluster_group",
+                "operationId": "renameClusterGroup",
                 "consumes": [
+                    "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
+                    {
+                        "name": "clusterGroupId",
+                        "in": "path",
+                        "description": "The unique identifier (UID) of the cluster_group",
+                        "required": true,
+                        "type": "string"
+                    },
                     {
                         "in": "body",
-                        "name": "mo",
-                        "description": "mo",
+                        "name": "cluster_group renaming information",
+                        "description": "cluster_group_name: The new name for the cluster_group",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/add_certificate"
+                            "$ref": "#/definitions/rename_cluster_group"
                         }
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/certificate"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/certificates/upload_der_encoded_certificate": {
-            "post": {
-                "tags": [
-                    "certificates"
-                ],
-                "summary": "Add a DER encoded SSL certificate to the HPE SimpliVity trust store",
-                "operationId": "addDEREncodedCertificate",
-                "consumes": [
-                    "multipart/form-data"
-                ],
-                "produces": [
-                    "application/vnd.simplivity.v1.11+json",
-                    "application/json",
-                    "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
-                ],
-                "parameters": [
-                    {
-                        "name": "certificate",
-                        "in": "formData",
-                        "description": "A DER encoded SSL certificate",
-                        "required": true,
-                        "type": "file"
-                    }
-                ],
-                "responses": {
-                    "201": {
-                        "description": "Created",
-                        "schema": {
-                            "$ref": "#/definitions/certificate"
-                        }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "Not Found"
-                    }
-                }
-            }
-        },
-        "/certificates/{certId}": {
-            "get": {
-                "tags": [
-                    "certificates"
-                ],
-                "summary": "Get an SSL certificate from the HPE SimpliVity trust store",
-                "operationId": "getCertificate",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/vnd.simplivity.v1.11+json",
-                    "application/json",
-                    "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
-                ],
-                "parameters": [
-                    {
-                        "name": "certId",
-                        "in": "path",
-                        "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to retrieve",
-                        "required": true,
-                        "type": "string"
                     }
                 ],
                 "responses": {
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object"
+                            "$ref": "#/definitions/TaskMO"
                         }
+                    },
+                    "201": {
+                        "description": "Created"
                     },
                     "401": {
                         "description": "Unauthorized"
@@ -1473,49 +1503,6 @@
                     },
                     "404": {
                         "description": "Not Found"
-                    }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "certificates"
-                ],
-                "summary": "Delete an SSL certificate in the HPE SimpliVity trust store",
-                "operationId": "deleteCertificate",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/vnd.simplivity.v1.11+json",
-                    "application/json",
-                    "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
-                ],
-                "parameters": [
-                    {
-                        "name": "certId",
-                        "in": "path",
-                        "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to delete",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "object"
-                        }
-                    },
-                    "204": {
-                        "description": "No Content"
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "403": {
-                        "description": "Forbidden"
                     }
                 }
             }
@@ -1543,7 +1530,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1662,6 +1650,13 @@
                         "type": "string"
                     },
                     {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifiers (UIDs) of the cluster_groups associated with the datastores to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "fields",
                         "in": "query",
                         "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
@@ -1738,18 +1733,19 @@
                 "summary": "Creates a new datastore",
                 "operationId": "createDatastore",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -1764,7 +1760,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1781,7 +1778,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -1822,7 +1819,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1873,7 +1871,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1888,7 +1887,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "204": {
@@ -1911,18 +1910,19 @@
                 "summary": "Resizes a datastore",
                 "operationId": "resizeDatastore",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -1937,7 +1937,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -1961,7 +1962,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -1987,18 +1988,19 @@
                 "summary": "Sets the backup policy for a datastore",
                 "operationId": "setDatastorePolicy",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -2013,7 +2015,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2037,7 +2040,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -2066,7 +2069,8 @@
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -2081,7 +2085,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2105,7 +2110,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -2146,7 +2151,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2187,7 +2193,8 @@
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -2202,7 +2209,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2226,7 +2234,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -2267,7 +2275,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2430,6 +2439,22 @@
                         "format": "int32"
                     },
                     {
+                        "name": "cluster_feature_level_min",
+                        "in": "query",
+                        "description": "The minimum cluster feature level of the HPE OmniStack software running on the host",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "cluster_feature_level_max",
+                        "in": "query",
+                        "description": "The maximum cluster feature level of the HPE OmniStack software running on the host",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
                         "name": "upgrade_state",
                         "in": "query",
                         "description": "The state of the most recent HPE OmniStack software upgrade for this host (SUCCESS, FAIL, IN_PROGRESS, NOOP, UNKNOWN)\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
@@ -2454,6 +2479,13 @@
                         "name": "state",
                         "in": "query",
                         "description": "The current state of the host",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifiers (UIDs) of the cluster_groups associated with the hosts to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
@@ -2551,7 +2583,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2604,7 +2637,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2660,7 +2694,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2745,7 +2780,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2798,7 +2834,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2863,7 +2900,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -2878,7 +2916,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -2902,7 +2941,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -2911,7 +2950,7 @@
                     "202": {
                         "description": "Accepted",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "401": {
@@ -2949,7 +2988,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3014,7 +3054,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3067,7 +3108,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3124,6 +3166,13 @@
                         "name": "type",
                         "in": "query",
                         "description": "The type of omnistack_clusters to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifiers (UIDs) of the cluster_groups associated with the omnistack_clusters to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
@@ -3235,7 +3284,17 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the cluster_group",
+                        "required": false,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3279,7 +3338,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "responses": {
                     "200": {
@@ -3323,7 +3383,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3376,7 +3437,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3429,7 +3491,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3492,18 +3555,19 @@
                 "summary": "Sets the time zone of the omnistack_cluster",
                 "operationId": "setClusterTimeZone",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -3518,7 +3582,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3542,7 +3607,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -3583,7 +3648,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3597,6 +3663,13 @@
                         "name": "name",
                         "in": "query",
                         "description": "The name of the policy\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifiers (UIDs) of the cluster_groups associated with the policies to return\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
@@ -3677,18 +3750,19 @@
                 "summary": "Creates a new policy",
                 "operationId": "createPolicy",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -3703,9 +3777,17 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
+                    {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the cluster_group",
+                        "required": false,
+                        "type": "string"
+                    },
                     {
                         "in": "body",
                         "name": "policy information",
@@ -3720,7 +3802,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -3761,7 +3843,17 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "cluster_group_id",
+                        "required": false,
+                        "type": "string"
+                    }
                 ],
                 "responses": {
                     "200": {
@@ -3790,18 +3882,19 @@
                 "summary": "Resumes policy-based backups on a specific targeted object",
                 "operationId": "resumePolicy",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -3816,7 +3909,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3833,7 +3927,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -3859,18 +3953,19 @@
                 "summary": "Suspends policy-based backups on a specific targeted object",
                 "operationId": "suspendPolicy",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -3885,7 +3980,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3902,7 +3998,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -3943,7 +4039,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -3994,7 +4091,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4009,7 +4107,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "204": {
@@ -4048,7 +4146,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4089,7 +4188,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -4104,7 +4204,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4167,7 +4268,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -4182,7 +4284,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4243,18 +4346,19 @@
                 "summary": "Renames the specified policy",
                 "operationId": "renamePolicy",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -4269,7 +4373,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4293,7 +4398,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -4329,6 +4434,7 @@
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json",
                     "application/vnd.simplivity.v1.2+json"
                 ],
                 "produces": [
@@ -4344,7 +4450,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4379,7 +4486,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -4420,7 +4527,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4463,18 +4571,19 @@
                 "summary": "Edits an existing policy rule",
                 "operationId": "updateRule",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -4489,7 +4598,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4520,7 +4630,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -4559,7 +4669,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4581,7 +4692,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "204": {
@@ -4606,7 +4717,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -4621,7 +4733,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4685,7 +4798,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4716,6 +4830,229 @@
                 "deprecated": true
             }
         },
+        "/security/certificates": {
+            "get": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Get all SSL certificates from the HPE SimpliVity trust store",
+                "operationId": "getCertificates",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Add an SSL certificate to the HPE SimpliVity trust store",
+                "operationId": "addCertificate",
+                "consumes": [
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "mo",
+                        "description": "mo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/add_certificate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/security/certificates/upload_der_encoded_certificate": {
+            "post": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Add a DER encoded SSL certificate to the HPE SimpliVity trust store",
+                "operationId": "addDEREncodedCertificate",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "certificate",
+                        "in": "formData",
+                        "description": "A DER encoded SSL certificate",
+                        "required": true,
+                        "type": "file"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/security/certificates/{certId}": {
+            "get": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Get an SSL certificate from the HPE SimpliVity trust store",
+                "operationId": "getCertificate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "certId",
+                        "in": "path",
+                        "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to retrieve",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Delete an SSL certificate in the HPE SimpliVity trust store",
+                "operationId": "deleteCertificate",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "certId",
+                        "in": "path",
+                        "description": "The unique identifier (SHA-1 thumbprint) of the certificate that you want to delete",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/certificate"
+                        }
+                    },
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    }
+                }
+            }
+        },
         "/tasks/{taskId}": {
             "get": {
                 "tags": [
@@ -4739,7 +5076,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4754,7 +5092,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "401": {
@@ -4792,7 +5130,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -4937,6 +5276,13 @@
                         "type": "string"
                     },
                     {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifiers (UIDs) of the cluster_groups associated with the virtual_machines to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "fields",
                         "in": "query",
                         "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
@@ -5017,7 +5363,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5032,7 +5379,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5075,18 +5423,19 @@
                 "summary": "Sets the backup policy for virtual machines",
                 "operationId": "setPolicyForVms",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5101,7 +5450,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5118,7 +5468,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5159,7 +5509,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5197,18 +5548,19 @@
                 "summary": "Backs up a virtual machine",
                 "operationId": "backupVm",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5223,7 +5575,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5247,7 +5600,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5276,7 +5629,8 @@
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5291,7 +5645,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5315,7 +5670,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5357,7 +5712,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5396,18 +5752,19 @@
                 "summary": "Clones a virtual machine",
                 "operationId": "cloneVm",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5422,7 +5779,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5446,7 +5804,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5487,7 +5845,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5550,18 +5909,19 @@
                 "summary": "Moves a virtual machine to another datastore",
                 "operationId": "moveVm",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5576,7 +5936,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5600,7 +5961,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5628,7 +5989,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5643,7 +6005,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5658,7 +6021,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5686,7 +6049,8 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
-                    "application/vnd.simplivity.v1.10+json"
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5701,7 +6065,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5716,7 +6081,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5742,18 +6107,19 @@
                 "summary": "Sets the backup policy for a virtual machine",
                 "operationId": "setPolicyForVm",
                 "consumes": [
+                    "application/vnd.simplivity.v1.5+json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
-                    "application/vnd.simplivity.v1.5+json",
-                    "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
                     "application/vnd.simplivity.v1.8+json",
-                    "application/vnd.simplivity.v1.2+json"
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5768,7 +6134,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5792,7 +6159,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/task"
+                            "$ref": "#/definitions/TaskMO"
                         }
                     },
                     "201": {
@@ -5821,7 +6188,8 @@
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
                     "application/json",
@@ -5836,7 +6204,8 @@
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.6+json",
-                    "application/vnd.simplivity.v1.8+json"
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.12+json"
                 ],
                 "parameters": [
                     {
@@ -5953,6 +6322,7 @@
             "type": "object",
             "required": [
                 "application_consistent",
+                "cluster_group_ids",
                 "compute_cluster_parent_hypervisor_object_id",
                 "compute_cluster_parent_name",
                 "consistency_type",
@@ -5983,6 +6353,13 @@
                     "type": "boolean",
                     "example": false,
                     "description": "An indicator to show if the backup represents a snapshot of a virtual machine with data that was first flushed to disk"
+                },
+                "cluster_group_ids": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the cluster_groups associated with the backup",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "compute_cluster_parent_hypervisor_object_id": {
                     "type": "string",
@@ -6397,6 +6774,56 @@
                 }
             }
         },
+        "TaskMO": {
+            "type": "object",
+            "required": [
+                "affected_objects",
+                "end_time",
+                "id",
+                "start_time",
+                "state"
+            ],
+            "properties": {
+                "affected_objects": {
+                    "type": "array",
+                    "description": "For a completed task, the unique identifiers (UIDs) and types of the objects affected by the operation",
+                    "items": {
+                        "$ref": "#/definitions/AffectedObjectMO"
+                    }
+                },
+                "end_time": {
+                    "type": "string",
+                    "description": "The time the task finished, expressed in ISO-8601 form, based on Coordinated Universal Time (UTC)"
+                },
+                "error_code": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The error code returned if a task failed"
+                },
+                "error_message": {
+                    "type": "string",
+                    "description": "The error message returned if a task fails"
+                },
+                "id": {
+                    "type": "string",
+                    "description": "The unique identifier (UID) of the task"
+                },
+                "start_time": {
+                    "type": "string",
+                    "description": "The time the task started, expressed in ISO-8601 form, based on Coordinated Universal Time (UTC)"
+                },
+                "state": {
+                    "type": "string",
+                    "description": "The current state of the task object",
+                    "enum": [
+                        "IN_PROGRESS",
+                        "COMPLETED",
+                        "FAILED"
+                    ]
+                }
+            },
+            "description": "A task that was created as a result of an operation performed on the system"
+        },
         "accelerator_card": {
             "type": "object",
             "required": [
@@ -6634,6 +7061,32 @@
             },
             "description": "An SSL Certificate"
         },
+        "clusterGroup": {
+            "type": "object",
+            "required": [
+                "clusters",
+                "id",
+                "name"
+            ],
+            "properties": {
+                "clusters": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the omnistack_clusters that are defined in the cluster_group",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "id": {
+                    "type": "string",
+                    "description": "The unique identifier (UID) of the cluster_group"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the cluster_group"
+                }
+            },
+            "description": "A cluster_group"
+        },
         "create_datastore": {
             "type": "object",
             "required": [
@@ -6749,10 +7202,10 @@
         "datastore": {
             "type": "object",
             "required": [
+                "cluster_group_ids",
                 "compute_cluster_parent_hypervisor_object_id",
                 "compute_cluster_parent_name",
                 "created_at",
-                "deleted",
                 "hypervisor_management_system",
                 "hypervisor_management_system_name",
                 "hypervisor_object_id",
@@ -6768,6 +7221,13 @@
                 "size"
             ],
             "properties": {
+                "cluster_group_ids": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the cluster_groups associated with the datastore",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "compute_cluster_parent_hypervisor_object_id": {
                     "type": "string",
                     "description": "The unique identifier (UID) of the hypervisor-based instance that contains the omnistack_cluster that is associated with the instance"
@@ -6922,6 +7382,8 @@
             "type": "object",
             "required": [
                 "can_rollback",
+                "cluster_feature_level",
+                "cluster_group_ids",
                 "compute_cluster_hypervisor_object_id",
                 "compute_cluster_name",
                 "compute_cluster_parent_hypervisor_object_id",
@@ -6966,6 +7428,18 @@
                     "type": "integer",
                     "format": "int64",
                     "description": "The number of total bytes saved by deduplication/compression for the host"
+                },
+                "cluster_feature_level": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The cluster feature level of the HPE OmniStack software running on the host"
+                },
+                "cluster_group_ids": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the cluster_groups associated with the host",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "compression_ratio": {
                     "type": "string",
@@ -7013,8 +7487,7 @@
                     "description": "The network mask of the federation"
                 },
                 "federation_mtu": {
-                    "type": "integer",
-                    "format": "int32",
+                    "type": "string",
                     "description": "The MTU of the federation"
                 },
                 "free_space": {
@@ -7052,8 +7525,7 @@
                     "description": "The network mask of the HPE OmniStack management module that runs on the host"
                 },
                 "management_mtu": {
-                    "type": "integer",
-                    "format": "int32",
+                    "type": "string",
                     "description": "The MTU of the OmniStack management module that runs on the host"
                 },
                 "model": {
@@ -7104,8 +7576,7 @@
                     "description": "The network mask of the HPE OmniStack storage module that runs on the host"
                 },
                 "storage_mtu": {
-                    "type": "integer",
-                    "format": "int32",
+                    "type": "string",
                     "description": "The MTU of the HPE OmniStack storage module that runs on the host"
                 },
                 "stored_compressed_data": {
@@ -7224,9 +7695,6 @@
         "infosight_configuration": {
             "type": "object",
             "properties": {
-                "enable": {
-                    "type": "boolean"
-                },
                 "infosight_enabled": {
                     "type": "boolean",
                     "example": false,
@@ -7240,12 +7708,6 @@
                     "type": "boolean",
                     "example": false,
                     "description": "The flag that indicates the cluster is registered with the HPE InfoSight service"
-                },
-                "proxy": {
-                    "type": "string"
-                },
-                "registered": {
-                    "type": "boolean"
                 }
             },
             "description": "The current configuration of the HPE InfoSight service"
@@ -7334,6 +7796,8 @@
                 "arbiter_address",
                 "arbiter_connected",
                 "capacity_savings",
+                "cluster_feature_level",
+                "cluster_group_ids",
                 "compression_ratio",
                 "deduplication_ratio",
                 "efficiency_ratio",
@@ -7345,6 +7809,7 @@
                 "hypervisor_object_parent_name",
                 "hypervisor_type",
                 "id",
+                "infosight_configuration",
                 "local_backup_capacity",
                 "members",
                 "name",
@@ -7376,6 +7841,18 @@
                     "type": "integer",
                     "format": "int64",
                     "description": "The number of total bytes saved by deduplication/compression across all hosts within the omnistack_cluster"
+                },
+                "cluster_feature_level": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The feature level of the HPE OmniStack software running on the cluster"
+                },
+                "cluster_group_ids": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the cluster_groups associated with the omnistack_cluster",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "compression_ratio": {
                     "type": "string",
@@ -7443,8 +7920,11 @@
                     "description": "The total amount of data storage used for local backups across all of the virtual machines defined within the omnistack_cluster"
                 },
                 "members": {
-                    "type": "string",
-                    "description": "The unique identifiers (UIDs) of the hosts defined within the omnistack_cluster"
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the hosts defined within the omnistack_cluster",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "name": {
                     "type": "string",
@@ -7671,11 +8151,19 @@
         "policy": {
             "type": "object",
             "required": [
+                "cluster_group_ids",
                 "id",
                 "name",
                 "rules"
             ],
             "properties": {
+                "cluster_group_ids": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the cluster_groups associated with the policy",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "id": {
                     "type": "string",
                     "description": "The unique identifier (UID) of the policy"
@@ -7779,6 +8267,19 @@
                 }
             },
             "description": "Renames the specified backup"
+        },
+        "rename_cluster_group": {
+            "type": "object",
+            "required": [
+                "cluster_group_name"
+            ],
+            "properties": {
+                "cluster_group_name": {
+                    "type": "string",
+                    "description": "The new name for the cluster_group"
+                }
+            },
+            "description": "Renames the specified cluster_group"
         },
         "report_on_proposed_rules_edits": {
             "type": "object",
@@ -8114,56 +8615,6 @@
             },
             "description": "Suspends or resumes policy backups"
         },
-        "task": {
-            "type": "object",
-            "required": [
-                "affected_objects",
-                "end_time",
-                "id",
-                "start_time",
-                "state"
-            ],
-            "properties": {
-                "affected_objects": {
-                    "type": "array",
-                    "description": "For a completed task, the unique identifiers (UIDs) and types of the objects affected by the operation",
-                    "items": {
-                        "$ref": "#/definitions/AffectedObjectMO"
-                    }
-                },
-                "end_time": {
-                    "type": "string",
-                    "description": "The time the task finished, expressed in ISO-8601 form, based on Coordinated Universal Time (UTC)"
-                },
-                "error_code": {
-                    "type": "integer",
-                    "format": "int32",
-                    "description": "The error code returned if a task failed"
-                },
-                "id": {
-                    "type": "string",
-                    "description": "The unique identifier (UID) of the task"
-                },
-                "message": {
-                    "type": "string",
-                    "description": "The error message returned if a task fails"
-                },
-                "start_time": {
-                    "type": "string",
-                    "description": "The time the task started, expressed in ISO-8601 form, based on Coordinated Universal Time (UTC)"
-                },
-                "state": {
-                    "type": "string",
-                    "description": "The current state of the task object",
-                    "enum": [
-                        "IN_PROGRESS",
-                        "COMPLETED",
-                        "FAILED"
-                    ]
-                }
-            },
-            "description": "A task that was created as a result of an operation performed on the system"
-        },
         "unshare_datastore": {
             "type": "object",
             "required": [
@@ -8199,6 +8650,7 @@
             "type": "object",
             "required": [
                 "app_aware_vm_status",
+                "cluster_group_ids",
                 "compute_cluster_parent_hypervisor_object_id",
                 "compute_cluster_parent_name",
                 "created_at",
@@ -8232,6 +8684,13 @@
                         "INVALID_OS",
                         "UNKNOWN_FAULT"
                     ]
+                },
+                "cluster_group_ids": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the cluster_groups associated with the virtual_machine",
+                    "items": {
+                        "type": "string"
+                    }
                 },
                 "compute_cluster_parent_hypervisor_object_id": {
                     "type": "string",
