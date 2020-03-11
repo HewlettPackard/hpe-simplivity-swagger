@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This API enables the programmatic management of key components of an HPE SimpliVity configuration.\n\nTo access the API, request an authentication token by issuing an authentication request in the following form, where the username/password combination is a set of valid management credentials for the applicable hypervisor environment:\n\n     curl -k https://simplivity@<host>/api/oauth/token -d grant_type=password -d username=<user> -d password=<pass>\n\nThen, you can pass in the resulting access_token returned in each HTTP header using Authorization: Bearer token. For example:\n\n     curl -H \"Authorization: Bearer 0a08c809-17ff-479f-b0a8-aedd4d8305a0\"\n\nThe access_token times out after 10 minutes of inactivity and expires after 24 hours.\n\nMake sure to use TLS version 1.1 or greater.\n",
-        "version": "1.13",
+        "version": "1.14",
         "title": "HPE OmniStack REST API",
         "contact": {
             "name": "Hewlett Packard Enterprise"
@@ -39,6 +39,10 @@
             "description": "A backup is a complete, standalone image of a specific virtual machine, taken at a specific point in time."
         },
         {
+            "name": "external_stores",
+            "description": "An external (non HPE SimpliVity) destination for storing backups, such as an HPE StoreOnce Catalyst store"
+        },
+        {
             "name": "virtual_machines",
             "description": "A virtual_machine represents a single virtual machine created within an HPE SimpliVity datastore."
         },
@@ -69,6 +73,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -306,6 +311,13 @@
                         "type": "string"
                     },
                     {
+                        "name": "external_store_name",
+                        "in": "query",
+                        "description": "The name of the external_stores to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "fields",
                         "in": "query",
                         "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
@@ -389,6 +401,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -406,6 +419,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -462,6 +476,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -479,6 +494,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -545,6 +561,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -598,6 +615,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -649,6 +667,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -666,6 +685,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -720,6 +740,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -737,6 +758,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -783,7 +805,7 @@
                 "tags": [
                     "backups"
                 ],
-                "summary": "Copies the specified backup to another omnistack_cluster",
+                "summary": "Copies the specified backup to another omnistack_cluster or external_store",
                 "operationId": "copyBackup",
                 "consumes": [
                     "application/vnd.simplivity.v1.5+json",
@@ -791,6 +813,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -808,6 +831,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -829,7 +853,7 @@
                     {
                         "in": "body",
                         "name": "backup copying information",
-                        "description": "destination_omnistack_cluster: The unique identifier (UID) of the destination omnistack_cluster where you want to copy the backup",
+                        "description": "destination_omnistack_cluster: The unique identifier (UID) of the destination omnistack_cluster or external_store name where you want to copy the backup",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/backup_copy"
@@ -871,6 +895,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -888,6 +913,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -942,6 +968,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -959,6 +986,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1022,6 +1050,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1039,6 +1068,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1105,6 +1135,7 @@
                 "summary": "Restore files from a specific partition",
                 "operationId": "restoreFiles",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -1118,6 +1149,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1185,6 +1217,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1262,6 +1295,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1324,6 +1358,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1374,6 +1409,7 @@
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
@@ -1477,6 +1513,7 @@
                 "operationId": "renameClusterGroup",
                 "consumes": [
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -1486,6 +1523,7 @@
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
@@ -1551,6 +1589,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1766,6 +1805,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1783,6 +1823,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1843,6 +1884,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1896,6 +1938,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1947,6 +1990,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -1964,6 +2008,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2027,6 +2072,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2044,6 +2090,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2102,6 +2149,7 @@
                 "summary": "Share a datastore",
                 "operationId": "shareDatastore",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -2116,6 +2164,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2183,6 +2232,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2229,6 +2279,7 @@
                 "summary": "Stop sharing a datastore",
                 "operationId": "unShareDatastore",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -2243,6 +2294,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2293,6 +2345,174 @@
                 }
             }
         },
+        "/external_stores": {
+            "get": {
+                "tags": [
+                    "external_stores"
+                ],
+                "summary": "Retrieves all external_stores",
+                "operationId": "listExternalStores",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.14+json",
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.13+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "The name of the external_stores to return\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "omnistack_cluster_id",
+                        "in": "query",
+                        "description": "The identifier of the cluster. This identifier is unique within the category namespace.",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "management_ip",
+                        "in": "query",
+                        "description": "The IP address of the external store\n\nAccepts: Single value, comma-separated list, pattern using one or more asterisk characters as a wildcard",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "cluster_group_id",
+                        "in": "query",
+                        "description": "The unique identifiers (UIDs) of the cluster_groups associated with the external stores to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fields",
+                        "in": "query",
+                        "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "A positive integer that represents the maximum number of results to return\n\nDefault: 500",
+                        "required": false,
+                        "type": "integer",
+                        "default": 500,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "A positive integer that directs the service to start returning the &lt;offset value&gt; instance, up to the limit\n\nDefault: 0",
+                        "required": false,
+                        "type": "integer",
+                        "default": 0,
+                        "format": "int32"
+                    },
+                    {
+                        "name": "case",
+                        "in": "query",
+                        "description": "An indicator that specifies if the filter and sort results use a case-sensitive or insensitive manner\n\nValid values: sensitive or insensitive\n\nDefault: sensitive",
+                        "required": false,
+                        "type": "string",
+                        "default": "sensitive",
+                        "enum": [
+                            "sensitive",
+                            "insensitive"
+                        ]
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "The name of the field where the sort occurs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order",
+                        "in": "query",
+                        "description": "The sort order preference\n\nValid values: ascending or descending\n\nDefault: descending",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/external_store"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "external_stores"
+                ],
+                "summary": "Registers a new external store",
+                "operationId": "registerExternalStores",
+                "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.13+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.14+json",
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.13+json",
+                    "application/vnd.simplivity.v1.12+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "external store information",
+                        "description": "management_ip: The IP address of the external store\n\nmanagement_port: The management IP port of the external store\n\nDefault: 9387\n\nname: The name of the external_store\n\nstorage_port: The storage IP port of the external store\n\nDefault: 9388\n\nomnistack_cluster_id: The UID of the omnistack_cluster associated with the external store\n\ntype: The type of external store\n\nDefault: StoreOnceOnPrem\n\nusername: The client name of the external store\n\npassword: The client password of the external store",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/register_external_store"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/TaskMO"
+                        }
+                    },
+                    "201": {
+                        "description": "Created"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/hosts": {
             "get": {
                 "tags": [
@@ -2310,6 +2530,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2619,6 +2840,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2674,6 +2896,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2732,6 +2955,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2819,6 +3043,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2874,6 +3099,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -2945,6 +3171,7 @@
                 "summary": "Removes the specified host from the federation. The specified hostId must not be the host executing the request.",
                 "operationId": "removeHostFromFederation",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -2958,6 +3185,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3031,6 +3259,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3098,6 +3327,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3153,6 +3383,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3239,6 +3470,20 @@
                         "name": "arbiter_connected",
                         "in": "query",
                         "description": "An indicator to show if the omnistack_cluster is connected to Arbiter\n\n Valid values:\n\nTrue: Only returns omnistack_clusters connected to Arbiters that you identified in arbiter_address\n\nFalse: Only returns omnistack_clusters not connected to Arbiters that you identified in arbiter_address",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "arbiter_required",
+                        "in": "query",
+                        "description": "An indicator to show if an Arbiter is required in this omnistack_cluster",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "arbiter_configured",
+                        "in": "query",
+                        "description": "An indicator to show if an Arbiter is configured in this omnistack_cluster",
                         "required": false,
                         "type": "boolean"
                     },
@@ -3330,6 +3575,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3385,6 +3631,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3431,6 +3678,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3486,6 +3734,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3541,6 +3790,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3617,6 +3867,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3634,6 +3885,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3701,6 +3953,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3780,6 +4033,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3894,6 +4148,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3911,6 +4166,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -3978,6 +4234,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4029,6 +4286,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4046,6 +4304,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4102,6 +4361,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4119,6 +4379,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4179,6 +4440,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4232,6 +4494,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4288,6 +4551,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4335,6 +4599,7 @@
                 "summary": "Generate a backup impact reported based on proposed creation of rules for the policy",
                 "operationId": "reportOnProposedRulesCreation",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -4348,6 +4613,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4377,7 +4643,7 @@
                     {
                         "in": "body",
                         "name": "Array of rules proposed to be created for the policy",
-                        "description": "app_consistent: An indicator that shows if data should be flushed to disk before taking a backup\n\nDefault: false\n\nconsistency_type: The consistency type for the rule\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
+                        "description": "application_consistent: Set to false for crash-consistent backups. Set to true for application-consistent backups (for example, VSS or snapshot backups).\n\nDefault: false\n\nconsistency_type: Set to DEFAULT for a snapshot backup. Set to VSS for a Microsoft Volume Shadow Copy Service backup. Set to NONE for crash-consistent backups.\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
                         "required": true,
                         "schema": {
                             "type": "array",
@@ -4417,6 +4683,7 @@
                 "summary": "Generate a backup impact reported based on proposed changes to the rules for the policy",
                 "operationId": "reportOnProposedRulesEdits",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -4430,6 +4697,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4459,7 +4727,7 @@
                     {
                         "in": "body",
                         "name": "Array of rules proposed to be changed in the policy",
-                        "description": "rule_id: The unique identifier (UID) of the policy rule\n\napp_consistent: An indicator that shows if data should be flushed to disk before taking a backup\n\nDefault: false\n\nconsistency_type: The consistency type for the rule\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
+                        "description": "rule_id: The unique identifier (UID) of the policy rule\n\napplication_consistent: Set to false for crash-consistent backups. Set to true for application-consistent backups (for example, VSS or snapshot backups).\n\nDefault: false\n\nconsistency_type: Set to DEFAULT for a snapshot backup. Set to VSS for a Microsoft Volume Shadow Copy Service backup. Set to NONE for crash-consistent backups.\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
                         "required": true,
                         "schema": {
                             "type": "array",
@@ -4504,6 +4772,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4521,6 +4790,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4584,6 +4854,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4600,6 +4871,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4629,7 +4901,7 @@
                     {
                         "in": "body",
                         "name": "array of policy rules information",
-                        "description": "app_consistent: An indicator that shows if data should be flushed to disk before taking a backup\n\nDefault: false\n\nconsistency_type: The consistency type for the rule\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
+                        "description": "application_consistent: Set to false for crash-consistent backups. Set to true for application-consistent backups (for example, VSS or snapshot backups).\n\nDefault: false\n\nconsistency_type: Set to DEFAULT for a snapshot backup. Set to VSS for a Microsoft Volume Shadow Copy Service backup. Set to NONE for crash-consistent backups.\n\nDefault: NONE\n\ndays: The days of the week (for example, Mon,Fri), or month (for example, 1,15) to take backups or \"last\" to specify the last day of each month\n\nDefault: All (that is, every day)\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster to store the backup\n\nDefault: local omnistack_cluster\n\nend_time: The time to stop backing up, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00\n\nfrequency: The number of minutes between backups\n\nretention: The number of minutes to keep backups\n\nstart_time: The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS).\n\nDefault: 00:00",
                         "required": true,
                         "schema": {
                             "type": "array",
@@ -4678,6 +4950,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4734,6 +5007,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4751,6 +5025,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4823,6 +5098,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4876,6 +5152,7 @@
                 "summary": "Generate a backup impact reported based on proposed deletion of a policy rule",
                 "operationId": "reportOnProposedRuleDeletion",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -4889,6 +5166,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -4955,6 +5233,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5005,6 +5284,7 @@
                     "application/json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
@@ -5038,6 +5318,7 @@
                 "summary": "Add an SSL certificate to the HPE SimpliVity trust store",
                 "operationId": "addCertificate",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5046,6 +5327,7 @@
                     "application/vnd.simplivity.v1.12+json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
@@ -5095,6 +5377,7 @@
                     "multipart/form-data"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
@@ -5142,6 +5425,7 @@
                     "application/json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
@@ -5187,6 +5471,7 @@
                     "application/json"
                 ],
                 "produces": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
@@ -5240,6 +5525,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5295,6 +5581,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5533,6 +5820,7 @@
                 "summary": "Generate a backup impact reported based on proposed application of a policy to one or more virtual machines",
                 "operationId": "reportOnProposedVMPolicySetting",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5546,6 +5834,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5602,6 +5891,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5619,6 +5909,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5679,6 +5970,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5730,6 +6022,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5747,6 +6040,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5768,7 +6062,7 @@
                     {
                         "in": "body",
                         "name": "new backup information",
-                        "description": "app_consistent: An indicator to show if the backup represents a snapshot of a virtual machine with data that was first flushed to disk\n\nDefault: false\n\nbackup_name: The name of the new backup created from this action\n\nconsistency_type: The consistency type of the backup\n\nDefault: NONE\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster that stores the new backup\n\nDefault:  local omnistack_cluster\n\nretention: The number of minutes to keep backups\n\nDefault: 0 (indicates that the backup never expires)",
+                        "description": "app_consistent: An indicator to show if the backup represents a snapshot of a virtual machine with data that was first flushed to disk\n\nDefault: false\n\nbackup_name: The name of the new backup created from this action\n\nconsistency_type: The consistency type of the backup\n\nDefault: NONE\n\ndestination_id: The unique identifier (UID) of the omnistack_cluster that stores the new backup\n\nDefault:  local omnistack_cluster\n\nretention: The number of minutes to keep backups\n\nDefault: 0 (indicates that the backup never expires)\n\nexternal_store_name: The name of the external_store",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/BackupVMMO"
@@ -5805,6 +6099,7 @@
                 "summary": "Set the virtual machine backup parameters used for application consistent backups.",
                 "operationId": "setBackupParams",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5819,6 +6114,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5887,6 +6183,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5939,6 +6236,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -5956,6 +6254,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6023,6 +6322,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6099,6 +6399,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6116,6 +6417,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6174,6 +6476,7 @@
                 "summary": "Power off a VM",
                 "operationId": "powerOffVMUsingPOST",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -6187,6 +6490,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6236,6 +6540,7 @@
                 "summary": "Power on a VM",
                 "operationId": "powerOnVMUsingPOST",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -6249,6 +6554,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6303,6 +6609,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6320,6 +6627,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6378,6 +6686,7 @@
                 "summary": "Validates the credentials for the virtual machine you want to backup",
                 "operationId": "validateBackupCred",
                 "consumes": [
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -6392,6 +6701,7 @@
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.2+json",
                     "application/vnd.simplivity.v1.7+json",
+                    "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
                     "application/vnd.simplivity.v1.1+json",
@@ -6591,6 +6901,10 @@
                     "type": "string",
                     "description": "The time the backup expired (and was deleted), unless locked. This time is expressed in ISO-8601 form, based on Coordinated Universal Time (UTC)."
                 },
+                "external_store_name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
+                },
                 "hypervisor_type": {
                     "type": "string",
                     "description": "The type of Hypervisor Management System (HMS) associated with the backup",
@@ -6761,6 +7075,10 @@
                     "type": "integer",
                     "format": "int32",
                     "description": "The number of minutes to keep backups"
+                },
+                "external_store_name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
                 }
             }
         },
@@ -7090,15 +7408,20 @@
         "backup_copy": {
             "type": "object",
             "required": [
-                "destination_id"
+                "destination_id",
+                "external_store_name"
             ],
             "properties": {
                 "destination_id": {
                     "type": "string",
                     "description": "The unique identifier (UID) of the omnistack_cluster that stores the new backup"
+                },
+                "external_store_name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
                 }
             },
-            "description": "Copies the specified backup to another omnistack_cluster"
+            "description": "Copies the specified backup to another omnistack_cluster or external_store"
         },
         "backup_parameters": {
             "type": "object",
@@ -7385,11 +7708,11 @@
                 "application_consistent": {
                     "type": "boolean",
                     "example": false,
-                    "description": "An indicator that shows if data should be flushed to disk before taking a backup"
+                    "description": "Set to false for crash-consistent backups. Set to true for application-consistent backups (for example, VSS or snapshot backups)."
                 },
                 "consistency_type": {
                     "type": "string",
-                    "description": "The consistency type for the rule",
+                    "description": "Set to DEFAULT for a snapshot backup. Set to VSS for a Microsoft Volume Shadow Copy Service backup. Set to NONE for crash-consistent backups.",
                     "enum": [
                         "NONE",
                         "DEFAULT",
@@ -7397,6 +7720,10 @@
                         "NOT_APPLICABLE",
                         "VSS"
                     ]
+                },
+                "external_store_name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
                 }
             },
             "description": "Creates a policy rule"
@@ -7610,6 +7937,51 @@
                 }
             },
             "description": "The drive set information"
+        },
+        "external_store": {
+            "type": "object",
+            "required": [
+                "cluster_group_ids",
+                "management_ip",
+                "name",
+                "omnistack_cluster_id"
+            ],
+            "properties": {
+                "cluster_group_ids": {
+                    "type": "array",
+                    "description": "The unique identifiers (UIDs) of the cluster_groups associated with the external store",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "management_ip": {
+                    "type": "string",
+                    "description": "The IP address of the external store"
+                },
+                "management_port": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The management IP port of the external store"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
+                },
+                "omnistack_cluster_id": {
+                    "type": "string",
+                    "description": "The UID of the omnistack_cluster associated with the external store"
+                },
+                "storage_port": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The storage IP port of the external store"
+                },
+                "type": {
+                    "type": "string",
+                    "description": "The type of external store"
+                }
+            },
+            "description": "An external_store"
         },
         "host": {
             "type": "object",
@@ -7928,13 +8300,14 @@
         "infosight_configuration": {
             "type": "object",
             "properties": {
-                "infosightProxy": {
-                    "type": "string"
+                "infosight_claim_tag": {
+                    "type": "string",
+                    "description": "The claim tag for the customer in HPE InfoSight"
                 },
                 "infosight_enabled": {
                     "type": "boolean",
                     "example": false,
-                    "description": "The flag that indicates the Omnistack host should transmit data to HPE InfoSight"
+                    "description": "The flag that indicates the HPE Omnistack host should transmit data to HPE InfoSight"
                 },
                 "infosight_proxy_url": {
                     "type": "string",
@@ -7944,6 +8317,10 @@
                     "type": "boolean",
                     "example": false,
                     "description": "The flag that indicates the cluster is registered with the HPE InfoSight service"
+                },
+                "infosight_tenant_name": {
+                    "type": "string",
+                    "description": "The tenant name for the customer in HPE InfoSight"
                 }
             },
             "description": "The current configuration of the HPE InfoSight service"
@@ -8030,7 +8407,9 @@
             "required": [
                 "allocated_capacity",
                 "arbiter_address",
+                "arbiter_configured",
                 "arbiter_connected",
+                "arbiter_required",
                 "capacity_savings",
                 "cluster_feature_level",
                 "cluster_group_ids",
@@ -8069,10 +8448,20 @@
                     "type": "string",
                     "description": "The address of the Arbiter connected to the omnistack_cluster"
                 },
+                "arbiter_configured": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "An indicator to show if an Arbiter is configured in this omnistack_cluster"
+                },
                 "arbiter_connected": {
                     "type": "boolean",
                     "example": false,
                     "description": "An indicator to show if the omnistack_cluster is connected to Arbiter"
+                },
+                "arbiter_required": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "An indicator to show if an Arbiter is required in this omnistack_cluster"
                 },
                 "capacity_savings": {
                     "type": "integer",
@@ -8517,6 +8906,49 @@
             },
             "description": "A policy on this system"
         },
+        "register_external_store": {
+            "type": "object",
+            "required": [
+                "management_ip",
+                "name",
+                "omnistack_cluster_id",
+                "password",
+                "username"
+            ],
+            "properties": {
+                "management_ip": {
+                    "type": "string",
+                    "description": "The IP address of the external store"
+                },
+                "management_port": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The management IP port of the external store"
+                },
+                "name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
+                },
+                "omnistack_cluster_id": {
+                    "type": "string",
+                    "description": "The UID of the omnistack_cluster associated with the external store"
+                },
+                "password": {
+                    "type": "string",
+                    "description": "The client password of the external store"
+                },
+                "storage_port": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The storage IP port of the external store"
+                },
+                "username": {
+                    "type": "string",
+                    "description": "The client name of the external store"
+                }
+            },
+            "description": "Registers a new external store"
+        },
         "remove_from_federation": {
             "type": "object",
             "properties": {
@@ -8595,11 +9027,11 @@
                 "application_consistent": {
                     "type": "boolean",
                     "example": false,
-                    "description": "An indicator that shows if data should be flushed to disk before taking a backup"
+                    "description": "Set to false for crash-consistent backups. Set to true for application-consistent backups (for example, VSS or snapshot backups)."
                 },
                 "consistency_type": {
                     "type": "string",
-                    "description": "The consistency type for the rule",
+                    "description": "Set to DEFAULT for a snapshot backup. Set to VSS for a Microsoft Volume Shadow Copy Service backup. Set to NONE for crash-consistent backups.",
                     "enum": [
                         "NONE",
                         "DEFAULT",
@@ -8607,6 +9039,10 @@
                         "NOT_APPLICABLE",
                         "VSS"
                     ]
+                },
+                "external_store_name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
                 }
             },
             "description": "Generate a backup impact reported based on proposed changes to the rules for the policy"
@@ -8706,6 +9142,10 @@
                     "format": "int32",
                     "description": "The maximum number of backups to save for this rule"
                 },
+                "external_store_name": {
+                    "type": "string",
+                    "description": "The name of the external_store"
+                },
                 "start_time": {
                     "type": "string",
                     "description": "The time to start the backups, for example, 14:30. This time is local to the time zone of the Hypervisor Management System (HMS)."
@@ -8717,11 +9157,11 @@
                 "application_consistent": {
                     "type": "boolean",
                     "example": false,
-                    "description": "An indicator that shows if data should be flushed to disk before taking a backup"
+                    "description": "Set to false for crash-consistent backups. Set to true for application-consistent backups (for example, VSS or snapshot backups)."
                 },
                 "consistency_type": {
                     "type": "string",
-                    "description": "The consistency type for the rule",
+                    "description": "Set to DEFAULT for a snapshot backup. Set to VSS for a Microsoft Volume Shadow Copy Service backup. Set to NONE for crash-consistent backups.",
                     "enum": [
                         "NONE",
                         "DEFAULT",
