@@ -12,7 +12,7 @@
         }
     },
     "host": "localhost",
-    "basePath": "/",
+    "basePath": "",
     "tags": [
         {
             "name": "datastores",
