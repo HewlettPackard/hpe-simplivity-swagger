@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "description": "This API enables the programmatic management of key components of an HPE SimpliVity configuration.\n\nTo access the API, request an authentication token by issuing an authentication request in the following form, where the username/password combination is a set of valid management credentials for the applicable hypervisor environment:\n\n     curl -k https://simplivity@<host>/api/oauth/token -d grant_type=password -d username=<user> -d password=<pass>\n\nThen, you can pass in the resulting access_token returned in each HTTP header using Authorization: Bearer token. For example:\n\n     curl -H \"Authorization: Bearer 0a08c809-17ff-479f-b0a8-aedd4d8305a0\"\n\nThe access_token times out after 10 minutes of inactivity and expires after 24 hours.\n\nMake sure to use TLS version 1.2 or greater.\n\nThere are a wide range of possible return values.  Below is a list of the most common return values. \n\n    200 \"OK\" \u2043 This indicates that the request and action has completed with no issues.\n    201 \"Created\" \u2043 This indicates that the request has completed and a new resource has been created.\n    202 \"Accepted\" \u2043 This indicates that the request has been accepted for processing but the processing has not\n                     completed. This is a typical return when a task is generated.\n    400 \"Bad Request\" \u2043 The request cannot or will not be proccessed.  Usually due to a missing required parameter\n                        or invalid data in the parameter.\n    401 \"Unauthorized\" \u2043 The request has not been applied because it lacks authentication credentials for the\n                         target resource.\n    404 \"Not Found\" \u2043 The requested target doesn't exist or has been deleted.\n    405 \"Method Not Allowed\" \u2043 The method being requested is not valid for the target it is being performed on.\n    408 \"Request Timeout\" \u2043 The response took too long.\n    500 \"Internal Server Error\" \u2043 Indicates that the server encountered an unexpected condition that prevented it\n                                  from fulfilling the request.\n\n<a href=\"https://developer.hpe.com/platform/hpe-simplivity/home\" class=\"\toggleEndpointList\" data-id=\"errors\">Click here for a complete list of return codes and response formats</a>\n\n",
-        "version": "1.16",
+        "version": "1.17",
         "title": "HPE OmniStack REST API",
         "contact": {
             "name": "Hewlett Packard Enterprise"
@@ -77,6 +77,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -320,6 +321,20 @@
                         "type": "string"
                     },
                     {
+                        "name": "backup_store_type",
+                        "in": "query",
+                        "description": "The storage type of the backups to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "associated_cluster",
+                        "in": "query",
+                        "description": "The cluster associated with the external_stores to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
                         "name": "fields",
                         "in": "query",
                         "description": "A comma-separated list of fields to include in the returned objects\n\n Default: Returns all fields",
@@ -407,6 +422,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -427,6 +443,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -486,6 +503,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -506,6 +524,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -519,7 +538,7 @@
                     {
                         "in": "body",
                         "name": "backups retention information",
-                        "description": "backup_id: The list of the unique identifier (UID) of the backups that you want to set the retention time for\n\nforce: An indicator to force a retention time modification even if this action results in deleting backups\n\nValid values:\n\nTrue: Sets the new retention time for the specified list of backups. This action may delete of one or more backups.\n\nFalse: Does not make the requested retention time modification if this results in deleting one or more backups. This operation returns a list of backups that the requested modification deletes. If the requested modification does not delete the backups, the retention time modification occurs.\n\nDefault: false\n\nretention: The number of minutes to keep backups",
+                        "description": "backup_id: The list of the unique identifier (UID) of the backups that you want to set the retention time for\n\nforce: An indicator to force a retention time modification even if this action results in deleting backups\n\nValid values:\n\nTrue: Sets the new retention time for the specified list of backups. This action may delete of one or more backups.\n\nFalse: Does not make the requested retention time modification if this results in deleting one or more backups. This operation returns a list of backups that the requested modification deletes. If the requested modification does not delete the backups, the retention time modification occurs.\n\nDefault: false\n\nretention: The number of minutes to keep backups\n\nforever: Retains backups indefinitely \n\nValid values:\n\nTrue: Sets the backup retention time to never expire.\n\nFalse: Sets the backup retention time according to the specified \"retention\".\n\nDefault: false",
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/backup_retention_set"
@@ -575,6 +594,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -631,6 +651,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -685,6 +706,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -705,6 +727,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -762,6 +785,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -782,6 +806,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -839,6 +864,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -859,6 +885,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -925,6 +952,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -945,6 +973,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1002,6 +1031,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1022,6 +1052,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1088,6 +1119,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1108,6 +1140,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1175,6 +1208,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -1193,6 +1227,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1263,6 +1298,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1343,6 +1379,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1408,6 +1445,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1459,6 +1497,7 @@
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -1565,6 +1604,7 @@
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json",
@@ -1577,6 +1617,7 @@
                     "application/vnd.simplivity.v1.7+json",
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -1647,6 +1688,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1872,6 +1914,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1892,6 +1935,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -1955,6 +1999,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2011,6 +2056,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2065,6 +2111,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2085,6 +2132,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2151,6 +2199,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2171,6 +2220,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2230,6 +2280,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json",
@@ -2249,6 +2300,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2319,6 +2371,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2366,6 +2419,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json",
@@ -2385,6 +2439,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -2447,6 +2502,7 @@
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.15+json",
@@ -2561,6 +2617,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.15+json",
                     "application/vnd.simplivity.v1.12+json",
@@ -2569,6 +2626,7 @@
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.15+json",
@@ -2616,12 +2674,14 @@
                 "summary": "Removes the external store as a backup destination for the cluster. Backups remain on the external store, but they can no longer be managed by HPE SimpliVity.",
                 "operationId": "unregisterExternalStores",
                 "consumes": [
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.15+json",
                     "application/vnd.simplivity.v1.16+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.15+json",
@@ -2669,12 +2729,14 @@
                 "summary": "Update the IP address or credentials that HPE SimpliVity uses to access the external store",
                 "operationId": "updateExternalStoreCredentials",
                 "consumes": [
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.15+json",
                     "application/vnd.simplivity.v1.16+json"
                 ],
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.13+json",
                     "application/vnd.simplivity.v1.15+json",
@@ -2735,6 +2797,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3061,6 +3124,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3119,6 +3183,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3180,6 +3245,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3270,6 +3336,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3328,6 +3395,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3400,6 +3468,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -3418,6 +3487,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3494,6 +3564,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3564,6 +3635,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3622,6 +3694,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3816,6 +3889,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3865,6 +3939,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3923,6 +3998,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -3981,6 +4057,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4051,6 +4128,7 @@
                 "summary": "Sets the IWO status of the omnistack_cluster",
                 "operationId": "enableClusterIWO",
                 "consumes": [
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.16+json"
                 ],
                 "produces": [
@@ -4064,6 +4142,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4130,6 +4209,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4150,6 +4230,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4220,6 +4301,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4302,6 +4384,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4330,6 +4413,20 @@
                         "name": "cluster_group_id",
                         "in": "query",
                         "description": "The unique identifiers (UIDs) of the cluster_groups associated with the policies to return\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "owner_cluster_id",
+                        "in": "query",
+                        "description": "The unique identifier (UID) of the omnistack_cluster that owns the policy\n\nAccepts: Single value, comma-separated list",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "owner_cluster_name",
+                        "in": "query",
+                        "description": "The name of the omnistack_cluster that owns the policy\n\nAccepts: Single value, comma-separated list",
                         "required": false,
                         "type": "string"
                     },
@@ -4419,6 +4516,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4439,6 +4537,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4509,6 +4608,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4563,6 +4663,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4583,6 +4684,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4642,6 +4744,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4662,6 +4765,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4725,6 +4829,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4781,6 +4886,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4840,6 +4946,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4888,6 +4995,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -4906,6 +5014,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -4976,6 +5085,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -4994,6 +5104,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5071,6 +5182,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5091,6 +5203,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5157,6 +5270,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1.3+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5176,6 +5290,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5257,6 +5372,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5316,6 +5432,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5336,6 +5453,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5411,6 +5529,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5465,6 +5584,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -5483,6 +5603,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5552,6 +5673,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5603,6 +5725,7 @@
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5639,6 +5762,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json",
@@ -5650,6 +5774,7 @@
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5702,6 +5827,7 @@
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5752,6 +5878,7 @@
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5800,6 +5927,7 @@
                 "produces": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
@@ -5837,6 +5965,157 @@
                 }
             }
         },
+        "/security/rbac/policies/role_assignments": {
+            "get": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Get all HPE OmniStack role assignments",
+                "operationId": "getRoleAssignments",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.14+json",
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.13+json",
+                    "application/vnd.simplivity.v1.15+json",
+                    "application/vnd.simplivity.v1.12+json",
+                    "application/vnd.simplivity.v1.16+json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/role_assignments"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Add an HPE OmniStack role assignment",
+                "operationId": "addRoleAssignments",
+                "consumes": [
+                    "application/vnd.simplivity.v1.17+json",
+                    "application/vnd.simplivity.v1.16+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.14+json",
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.13+json",
+                    "application/vnd.simplivity.v1.15+json",
+                    "application/vnd.simplivity.v1.12+json",
+                    "application/vnd.simplivity.v1.16+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "mo",
+                        "description": "mo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/role_assignments"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/role_assignments"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
+        "/security/rbac/policies/role_assignments/remove": {
+            "post": {
+                "tags": [
+                    "security"
+                ],
+                "summary": "Remove HPE OmniStack role assignments",
+                "operationId": "removeRoleAssignments",
+                "consumes": [
+                    "application/vnd.simplivity.v1.17+json",
+                    "application/vnd.simplivity.v1.16+json"
+                ],
+                "produces": [
+                    "application/vnd.simplivity.v1.14+json",
+                    "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
+                    "application/json",
+                    "application/vnd.simplivity.v1.9+json",
+                    "application/vnd.simplivity.v1.10+json",
+                    "application/vnd.simplivity.v1.8+json",
+                    "application/vnd.simplivity.v1.13+json",
+                    "application/vnd.simplivity.v1.15+json",
+                    "application/vnd.simplivity.v1.12+json",
+                    "application/vnd.simplivity.v1.16+json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "mo",
+                        "description": "mo",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/role_assignments"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    },
+                    "204": {
+                        "description": "No Content",
+                        "schema": {
+                            "$ref": "#/definitions/role_assignments"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    }
+                }
+            }
+        },
         "/tasks/{taskId}": {
             "get": {
                 "tags": [
@@ -5858,6 +6137,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -5916,6 +6196,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6155,6 +6436,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -6173,6 +6455,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6232,6 +6515,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6252,6 +6536,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6315,6 +6600,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6369,6 +6655,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6389,6 +6676,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6448,6 +6736,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json",
@@ -6467,6 +6756,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6538,6 +6828,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6593,6 +6884,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6613,6 +6905,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6683,6 +6976,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6762,6 +7056,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6782,6 +7077,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6841,6 +7137,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -6859,6 +7156,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6909,6 +7207,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.13+json",
@@ -6927,6 +7226,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -6984,6 +7284,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -7004,6 +7305,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -7063,6 +7365,7 @@
                 "consumes": [
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.9+json",
                     "application/vnd.simplivity.v1.10+json",
                     "application/vnd.simplivity.v1.8+json",
@@ -7082,6 +7385,7 @@
                     "application/vnd.simplivity.v1.14+json",
                     "application/vnd.simplivity.v1.4+json",
                     "application/vnd.simplivity.v1.11+json",
+                    "application/vnd.simplivity.v1.17+json",
                     "application/vnd.simplivity.v1.1+json",
                     "application/vnd.simplivity.v1+json",
                     "application/vnd.simplivity.v1.3+json",
@@ -7206,6 +7510,8 @@
             "type": "object",
             "required": [
                 "application_consistent",
+                "associated_cluster",
+                "backup_store_type",
                 "cluster_group_ids",
                 "compute_cluster_parent_hypervisor_object_id",
                 "compute_cluster_parent_name",
@@ -7237,6 +7543,20 @@
                     "type": "boolean",
                     "example": false,
                     "description": "An indicator to show if the backup represents a snapshot of a virtual machine with data that was first flushed to disk"
+                },
+                "associated_cluster": {
+                    "type": "string",
+                    "description": "The cluster associated with the external_store"
+                },
+                "backup_store_type": {
+                    "type": "string",
+                    "description": "The storage type of the backup",
+                    "enum": [
+                        "SimplivityStore",
+                        "StoreOnceOnPrem",
+                        "StoreOnceCloud",
+                        "Unknown"
+                    ]
                 },
                 "cluster_group_ids": {
                     "type": "array",
@@ -7858,9 +8178,10 @@
                     "example": false,
                     "description": "An indicator to force a retention time modification even if this action results in deleting backups"
                 },
-                "cluster_group_id": {
-                    "type": "string",
-                    "description": "The cluster group id of the backup list"
+                "forever": {
+                    "type": "boolean",
+                    "example": false,
+                    "description": "Retains backups indefinitely "
                 }
             },
             "description": "Sets the retention time for the specified list of backups"
@@ -9237,6 +9558,8 @@
                 "cluster_group_ids",
                 "id",
                 "name",
+                "owner_cluster_id",
+                "owner_cluster_name",
                 "rules"
             ],
             "properties": {
@@ -9246,6 +9569,14 @@
                     "items": {
                         "type": "string"
                     }
+                },
+                "owner_cluster_id": {
+                    "type": "string",
+                    "description": "The unique identifier (UID) of the omnistack_cluster that owns the policy"
+                },
+                "owner_cluster_name": {
+                    "type": "string",
+                    "description": "The name of the omnistack_cluster that owns the policy"
                 },
                 "id": {
                     "type": "string",
@@ -9363,6 +9694,14 @@
                     "format": "int32",
                     "description": "The storage IP port of the external store"
                 },
+                "type": {
+                    "type": "string",
+                    "description": "The type of external store",
+                    "enum": [
+                        "StoreOnceOnPrem",
+                        "StoreOnceCloud"
+                    ]
+                },
                 "username": {
                     "type": "string",
                     "description": "The client name of the external store"
@@ -9400,6 +9739,13 @@
                 "cluster_group_name"
             ],
             "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "revision": {
+                    "type": "integer",
+                    "format": "int32"
+                },
                 "cluster_group_name": {
                     "type": "string",
                     "description": "The new name for the cluster_group"
@@ -9519,6 +9865,27 @@
                 }
             },
             "description": "Creates a new virtual machine or replaces the original virtual machine from the specified backup"
+        },
+        "role_assignments": {
+            "type": "object",
+            "required": [
+                "groups",
+                "role"
+            ],
+            "properties": {
+                "role": {
+                    "type": "string",
+                    "description": "The value of the HPE OmniStack role"
+                },
+                "groups": {
+                    "type": "array",
+                    "description": "The vCenter Server group(s) assigned to the HPE OmniStack role",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            },
+            "description": "The HPE OmniStack role assignments"
         },
         "rule": {
             "type": "object",
